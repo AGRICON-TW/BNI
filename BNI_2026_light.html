@@ -1,741 +1,568 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>2026年新制紅綠燈快速計算表</title>
-  <style>
-    :root{
-      --bni-red:#c8102e;
-      --card:#ffffff;
-      --muted:#f6f6f7;
-      --text:#1f2937;
-      --sub:#4b5563;
-      --border:#e5e7eb;
-      --shadow: 0 10px 25px rgba(0,0,0,.12);
-      --radius:16px;
-    }
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
-      color:var(--text);
-      background: linear-gradient(135deg, var(--bni-red) 0%, #a80c23 55%, #7a0818 100%);
-      min-height:100vh;
-    }
-    header{
-      padding: 22px 16px 10px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    .title{
-      display:flex;
-      gap:14px;
-      align-items:center;
-      flex-wrap:wrap;
-      color:white;
-    }
-    .badge{
-      background: rgba(255,255,255,.14);
-      border: 1px solid rgba(255,255,255,.25);
-      padding: 6px 10px;
-      border-radius:999px;
-      font-size: 13px;
-      backdrop-filter: blur(6px);
-    }
-    h1{
-      margin:0;
-      font-size: clamp(22px, 3vw, 34px);
-      letter-spacing: .5px;
-    }
-    .subtitle{
-      margin: 10px 0 0;
-      color: rgba(255,255,255,.9);
-      line-height: 1.5;
-      font-size: 14.5px;
-      max-width: 980px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026年BNI新制紅綠燈快速計算表</title>
+    <style>
+        :root {
+            --bni-red: #CF2030; /* BNI 標準紅 */
+            --bni-burgundy: #861F25;
+            --traffic-green: #28a745;
+            --traffic-yellow: #ffc107;
+            --traffic-red: #dc3545;
+            --traffic-grey: #6c757d;
+        }
 
-    main{
-      max-width:1100px;
-      margin: 12px auto 34px;
-      padding: 0 16px 24px;
-      display:grid;
-      grid-template-columns: 1.25fr .75fr;
-      gap: 16px;
-    }
-    @media (max-width: 980px){
-      main{ grid-template-columns: 1fr; }
-    }
+        body {
+            font-family: "Microsoft JhengHei", "Heiti TC", sans-serif;
+            background-color: var(--bni-red);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
 
-    .card{
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(255,255,255,.2);
-      overflow:hidden;
-    }
-    .card-head{
-      padding: 14px 16px;
-      background: linear-gradient(0deg, #fff 0%, #fff 45%, var(--muted) 100%);
-      border-bottom: 1px solid var(--border);
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap: 12px;
-    }
-    .card-head h2{
-      margin:0;
-      font-size: 16px;
-    }
-    .hint{
-      margin: 6px 0 0;
-      color: var(--sub);
-      font-size: 13px;
-      line-height: 1.45;
-    }
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      background: #fff;
-      border: 1px solid var(--border);
-      color: var(--sub);
-      font-size: 13px;
-      white-space:nowrap;
-    }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
 
-    table{
-      width:100%;
-      border-collapse: collapse;
-      font-size: 14px;
-    }
-    thead th{
-      text-align:left;
-      padding: 12px 14px;
-      background: #fafafa;
-      border-bottom: 1px solid var(--border);
-      color:#111827;
-      font-size: 13px;
-    }
-    tbody td{
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--border);
-      vertical-align: top;
-    }
-    tbody tr:last-child td{ border-bottom: none; }
-    .col-item{ width: 22%; min-width: 160px; }
-    .col-rule{ width: 48%; }
-    .col-input{ width: 15%; min-width: 140px; }
-    .col-score{ width: 15%; min-width: 120px; }
+        /* Header Section */
+        .header {
+            background: linear-gradient(135deg, var(--bni-red), var(--bni-burgundy));
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+        }
 
-    .item{
-      display:flex;
-      align-items:flex-start;
-      gap: 10px;
-      font-weight: 700;
-    }
-    .icon{
-      width: 32px;
-      height: 32px;
-      flex: 0 0 32px;
-      display:grid;
-      place-items:center;
-      border-radius: 10px;
-      background: #fff0f2;
-      border: 1px solid #ffd1d8;
-    }
-    .icon span{ font-size: 18px; }
-    .rule{
-      color: var(--sub);
-      line-height: 1.55;
-    }
-    .rule ul{
-      margin: 6px 0 0 18px;
-      padding: 0;
-    }
-    .rule li{ margin: 4px 0; }
+        .header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
 
-    input[type="number"]{
-      width: 100%;
-      box-sizing:border-box;
-      padding: 10px 10px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: #fff;
-      font-size: 14px;
-      outline:none;
-      transition: box-shadow .15s, border-color .15s;
-    }
-    input[type="number"]:focus{
-      border-color: #fda4af;
-      box-shadow: 0 0 0 4px rgba(253,164,175,.35);
-    }
-    .mini{
-      display:block;
-      margin-top: 6px;
-      color: #6b7280;
-      font-size: 12px;
-      line-height: 1.35;
-    }
-    .scorebox{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 8px;
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 10px 10px;
-      font-weight: 700;
-    }
-    .scorebox small{
-      font-weight: 600;
-      color: #6b7280;
-    }
+        .header p {
+            margin: 10px 0 0;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
 
-    /* Right panel */
-    .side{
-      padding: 16px;
-    }
-    .big{
-      font-size: 42px;
-      margin: 8px 0 0;
-      letter-spacing: .5px;
-    }
-    .muted{
-      color: var(--sub);
-      line-height: 1.55;
-      font-size: 14px;
-      margin: 8px 0 0;
-    }
-    .light-wrap{
-      margin-top: 14px;
-      display:flex;
-      gap: 14px;
-      align-items:center;
-      padding: 14px;
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      background: #fafafa;
-    }
-    .light{
-      width: 56px;
-      height: 56px;
-      border-radius: 999px;
-      background: #9ca3af; /* default gray */
-      box-shadow: inset 0 -10px 16px rgba(0,0,0,.16);
-      border: 3px solid rgba(255,255,255,.75);
-    }
-    .light-label{
-      display:flex;
-      flex-direction:column;
-      gap: 2px;
-    }
-    .light-label b{ font-size: 16px; }
-    .light-label span{ color: var(--sub); font-size: 13px; }
+        /* Traffic Light Display */
+        .score-board {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #eee;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
 
-    .legend{
-      margin-top: 12px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow:hidden;
-      background:#fff;
-    }
-    .legend h3{
-      margin:0;
-      padding: 12px 14px;
-      background: #fafafa;
-      border-bottom: 1px solid var(--border);
-      font-size: 14px;
-    }
-    .legend .rows{
-      padding: 10px 14px 14px;
-      display:grid;
-      gap: 10px;
-    }
-    .lg-row{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 10px;
-      font-size: 13px;
-      color: var(--sub);
-    }
-    .dot{
-      width: 14px; height: 14px; border-radius: 999px;
-      border: 1px solid rgba(0,0,0,.08);
-    }
-    .dot.gray{ background:#9ca3af; }
-    .dot.red{ background:#ef4444; }
-    .dot.yellow{ background:#f59e0b; }
-    .dot.green{ background:#22c55e; }
+        .traffic-light {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            background-color: var(--traffic-grey);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
+            transition: background-color 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        }
 
-    .actions{
-      display:flex;
-      gap: 10px;
-      flex-wrap:wrap;
-      margin-top: 14px;
-    }
-    button{
-      appearance:none;
-      border:none;
-      cursor:pointer;
-      border-radius: 999px;
-      padding: 10px 14px;
-      font-weight: 700;
-      font-size: 14px;
-    }
-    .btn-primary{
-      background: var(--bni-red);
-      color: white;
-      box-shadow: 0 8px 18px rgba(200,16,46,.25);
-    }
-    .btn-ghost{
-      background: #fff;
-      border: 1px solid var(--border);
-      color: var(--text);
-    }
-    footer{
-      max-width:1100px;
-      margin: 0 auto;
-      padding: 0 16px 28px;
-      color: rgba(255,255,255,.92);
-      font-size: 12.5px;
-      line-height: 1.6;
-    }
-    .kbd{
-      background: rgba(255,255,255,.16);
-      border: 1px solid rgba(255,255,255,.28);
-      padding: 2px 8px;
-      border-radius: 999px;
-      font-weight: 700;
-    }
-  </style>
+        .total-score {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+        }
+
+        .score-label {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        /* Tips & Date Section */
+        .info-panel {
+            background-color: #fff9e6;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 15px 20px;
+            border-radius: 4px;
+        }
+
+        .date-input-wrapper {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .date-input-wrapper input {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: inherit;
+        }
+
+        .week-display {
+            font-weight: bold;
+            color: var(--bni-red);
+            font-size: 0.95rem;
+            margin-top: 5px;
+        }
+
+        /* Form Section */
+        .form-section {
+            padding: 0 20px 20px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            border-bottom: 1px dashed #ddd;
+            padding-bottom: 15px;
+        }
+
+        .input-group:last-child {
+            border-bottom: none;
+        }
+
+        .label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .label-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .item-score {
+            font-weight: bold;
+            color: var(--bni-red);
+            font-size: 1.1rem;
+        }
+
+        .desc-text {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 5px;
+            line-height: 1.4;
+        }
+
+        .projected-text {
+            font-size: 0.85rem;
+            color: #2196F3;
+            font-weight: bold;
+            margin-top: 5px;
+            display: none; /* Default hidden */
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1rem;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus {
+            border-color: var(--bni-red);
+            outline: none;
+        }
+
+        /* Range indicators */
+        .ranges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 8px;
+        }
+        .badge {
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            background: #eee;
+            border-radius: 10px;
+            color: #555;
+        }
+        .badge.active {
+            background: var(--bni-red);
+            color: white;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.8rem;
+            color: #fff;
+            opacity: 0.8;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .pop {
+            animation: pulse 0.3s ease-in-out;
+        }
+    </style>
 </head>
-
 <body>
-  <header>
-    <div class="title">
-      <span class="badge">BNI｜2026 新制</span>
-      <h1>2026年新制紅綠燈快速計算表</h1>
+
+    <div class="container">
+        <div class="header">
+            <h1>2026年新制紅綠燈快速計算表</h1>
+            <p>BNI Traffic Lights Calculator</p>
+        </div>
+
+        <div class="score-board">
+            <div class="score-label">預估總分</div>
+            <div class="traffic-light" id="lightIcon">
+                <span id="face">😐</span>
+            </div>
+            <div class="total-score" id="totalScore">0</div>
+            <div id="statusText" style="margin-top:5px; font-weight:bold; color:#666;">灰燈</div>
+        </div>
+
+        <div class="info-panel">
+            <strong>📅 入會/續會日期基準設定</strong>
+            <div class="desc-text">若入會未滿 26 週，系統將以您的「每週平均值」放大為 26 週基準來給分，以真實反映您的積極度。</div>
+            <div class="date-input-wrapper">
+                <input type="date" id="joinDate" onchange="calc()">
+                <div class="week-display" id="weekDisplay">目前計算基準：26 週</div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            
+            <div class="input-group">
+                <div class="label-row">
+                    <span class="label-title">📅 1. 出缺席次數</span>
+                    <span class="item-score" id="score1">0 分</span>
+                </div>
+                <input type="number" id="input1" placeholder="輸入缺席次數 (例如: 1)" min="0" oninput="calc()">
+                <div class="desc-text">滿分10分。缺席超過4次將開放專業別。</div>
+                <div class="projected-text" id="proj1"></div>
+                <div class="ranges">
+                    <span class="badge" id="badge1-1">0-1次: 10分</span>
+                    <span class="badge" id="badge1-2">2-3次: 5分</span>
+                    <span class="badge" id="badge1-3">4次以上: 0分</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="label-row">
+                    <span class="label-title">🎓 2. 培訓學分 (CEU)</span>
+                    <span class="item-score" id="score2">0 分</span>
+                </div>
+                <input type="number" id="input2" placeholder="輸入累積學分 (例如: 13)" min="0" oninput="calc()">
+                <div class="desc-text">滿分10分。包含線上培訓、Podcast與實體培訓。</div>
+                <div class="projected-text" id="proj2"></div>
+                <div class="ranges">
+                    <span class="badge" id="badge2-1">12分以上: 10分</span>
+                    <span class="badge" id="badge2-2">1-12分: 5分</span>
+                    <span class="badge" id="badge2-3">0分: 0分</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="label-row">
+                    <span class="label-title">🤝 3. 一對一次數</span>
+                    <span class="item-score" id="score3">0 分</span>
+                </div>
+                <input type="number" id="input3" placeholder="輸入次數 (例如: 26)" min="0" oninput="calc()">
+                <div class="desc-text">滿分20分。這是建立信任的基礎。</div>
+                <div class="projected-text" id="proj3"></div>
+                <div class="ranges">
+                    <span class="badge" id="badge3-1">26次以上: 20分</span>
+                    <span class="badge" id="badge3-2">20-25次: 15分</span>
+                    <span class="badge" id="badge3-3">13-19次: 10分</span>
+                    <span class="badge" id="badge3-4">7-12次: 5分</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="label-row">
+                    <span class="label-title">👥 4. 來賓數量</span>
+                    <span class="item-score" id="score4">0 分</span>
+                </div>
+                <input type="number" id="input4" placeholder="輸入人數 (例如: 5)" min="0" oninput="calc()">
+                <div class="desc-text">滿分25分。來賓是分會壯大的養分。</div>
+                <div class="projected-text" id="proj4"></div>
+                <div class="ranges">
+                    <span class="badge" id="badge4-1">5位+: 25分</span>
+                    <span class="badge" id="badge4-2">4位: 20分</span>
+                    <span class="badge" id="badge4-3">3位: 15分</span>
+                    <span class="badge" id="badge4-4">2位: 10分</span>
+                    <span class="badge" id="badge4-5">1位: 5分</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="label-row">
+                    <span class="label-title">🌟 5. 來賓轉職為夥伴</span>
+                    <span class="item-score" id="score5">0 分</span>
+                </div>
+                <input type="number" id="input5" placeholder="輸入成功入會人數" min="0" oninput="calc()">
+                <div class="desc-text">滿分5分。成功讓一位來賓轉職為夥伴即得分。</div>
+                <div class="projected-text" id="proj5"></div>
+                <div class="ranges">
+                    <span class="badge" id="badge5-1">1位以上: 5分</span>
+                    <span class="badge" id="badge5-2">0位: 0分</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="label-row">
+                    <span class="label-title">📄 6. 提供的引薦單</span>
+                    <span class="item-score" id="score6">0 分</span>
+                </div>
+                <input type="number" id="input6" placeholder="輸入張數 (例如: 33)" min="0" oninput="calc()">
+                <div class="desc-text">滿分25分。付出者收穫的核心。</div>
+                <div class="projected-text" id="proj6"></div>
+                <div class="ranges">
+                    <span class="badge" id="badge6-1">33張+: 25分</span>
+                    <span class="badge" id="badge6-2">26-32張: 20分</span>
+                    <span class="badge" id="badge6-3">20-25張: 15分</span>
+                    <span class="badge" id="badge6-4">13-19張: 10分</span>
+                    <span class="badge" id="badge6-5">7-12張: 5分</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="label-row">
+                    <span class="label-title">💰 7. 引薦金額 (感謝單)</span>
+                    <span class="item-score" id="score7">0 分</span>
+                </div>
+                <input type="number" id="input7" placeholder="輸入金額 (單位: 元)" min="0" oninput="calc()">
+                <div class="desc-text">滿分5分。您為夥伴帶來的實際生意。</div>
+                <div class="projected-text" id="proj7"></div>
+                <div class="ranges">
+                    <span class="badge" id="badge7-1">>78萬: 5分</span>
+                    <span class="badge" id="badge7-2">39-78萬: 4分</span>
+                    <span class="badge" id="badge7-3">13-39萬: 3分</span>
+                    <span class="badge" id="badge7-4">5.2-13萬: 2分</span>
+                    <span class="badge" id="badge7-5"><5.2萬: 1分</span>
+                </div>
+            </div>
+        </div>
     </div>
-    <p class="subtitle">
-      📌 <b>數據來源提醒：</b>請打開手機 <b>Connect APP</b> → 選擇畫面中的 <b>「6個月」</b> 統計數據，
-      將各項目顯示的數字輸入到此頁面，即可自動計算紅綠燈成績與燈號。
-    </p>
-  </header>
+    <div class="footer">
+        © 2026 BNI New System Calculator
+    </div>
 
-  <main>
-    <!-- Left: table -->
-    <section class="card">
-      <div class="card-head">
-        <div>
-          <h2>輸入區（26 週／半年）</h2>
-          <div class="hint">把 Connect APP（6個月）看到的數字填進來，系統會自動算分。</div>
-        </div>
-        <div class="pill" title="燈號會隨分數自動變動">🚦 自動換燈</div>
-      </div>
+    <script>
+        // 初始化時，將預設日期設定為 26 週前（預設滿期狀態）
+        document.addEventListener("DOMContentLoaded", function() {
+            let d = new Date();
+            d.setDate(d.getDate() - (26 * 7));
+            document.getElementById('joinDate').value = d.toISOString().split('T')[0];
+            calc();
+        });
 
-      <div style="overflow:auto;">
-        <table>
-          <thead>
-            <tr>
-              <th class="col-item">項目</th>
-              <th class="col-rule">計分規則（半年 26 週）</th>
-              <th class="col-input">輸入數字</th>
-              <th class="col-score">本項得分</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="col-item">
-                <div class="item">
-                  <div class="icon"><span>📅</span></div>
-                  <div>1) 出缺席</div>
-                </div>
-                <span class="mini">滿分：10 分（調降）</span>
-              </td>
-              <td class="col-rule">
-                <div class="rule">
-                  輸入「缺席次數」：
-                  <ul>
-                    <li>缺席 ≤ 1 次：10 分</li>
-                    <li>缺席 2–3 次：5 分</li>
-                    <li>缺席 ≥ 4 次：0 分（開放專業別）</li>
-                  </ul>
-                </div>
-              </td>
-              <td class="col-input">
-                <input id="absences" type="number" min="0" step="1" value="0" inputmode="numeric" />
-                <span class="mini">缺席次數</span>
-              </td>
-              <td class="col-score">
-                <div class="scorebox"><small>分數</small><span id="score-absences">0</span></div>
-              </td>
-            </tr>
+        function calc() {
+            let total = 0;
 
-            <tr>
-              <td class="col-item">
-                <div class="item">
-                  <div class="icon"><span>🎓</span></div>
-                  <div>2) 培訓分數</div>
-                </div>
-                <span class="mini">滿分：10 分（調降）</span>
-              </td>
-              <td class="col-rule">
-                <div class="rule">
-                  輸入「累積學分」：
-                  <ul>
-                    <li>學分 &gt; 12：10 分</li>
-                    <li>學分 1–12：5 分</li>
-                    <li>學分 = 0：0 分</li>
-                  </ul>
-                </div>
-              </td>
-              <td class="col-input">
-                <input id="credits" type="number" min="0" step="0.5" value="0" inputmode="decimal" />
-                <span class="mini">累積學分</span>
-              </td>
-              <td class="col-score">
-                <div class="scorebox"><small>分數</small><span id="score-credits">0</span></div>
-              </td>
-            </tr>
+            // 處理週數換算邏輯
+            let joinDateVal = document.getElementById('joinDate').value;
+            let W = 26;
+            if (joinDateVal) {
+                let jDate = new Date(joinDateVal);
+                let today = new Date();
+                // 確保不會輸入未來的日期導致負數
+                if (jDate > today) jDate = today; 
+                
+                let diffTime = Math.abs(today - jDate);
+                let diffDays = diffTime / (1000 * 60 * 60 * 24);
+                W = diffDays / 7;
+                
+                // 限制在 1 ~ 26 週內
+                if (W < 1) W = 1; 
+                if (W > 26) W = 26; 
+            }
+            
+            let isProrated = (W < 26);
+            document.getElementById('weekDisplay').innerText = `目前計算基準：約 ${W.toFixed(1)} 週`;
+            
+            // 放大倍率（如果只有 13 週，倍率就是 2 倍）
+            let multiplier = 26 / W;
 
-            <tr>
-              <td class="col-item">
-                <div class="item">
-                  <div class="icon"><span>🤝</span></div>
-                  <div>3) 一對一</div>
-                </div>
-                <span class="mini">滿分：20 分（調高）</span>
-              </td>
-              <td class="col-rule">
-                <div class="rule">
-                  輸入「一對一次數」：
-                  <ul>
-                    <li>≥ 26 次：20 分</li>
-                    <li>20–25 次：15 分</li>
-                    <li>13–19 次：10 分</li>
-                    <li>7–12 次：5 分</li>
-                    <li>0–6 次：0 分</li>
-                  </ul>
-                </div>
-              </td>
-              <td class="col-input">
-                <input id="one2one" type="number" min="0" step="1" value="0" inputmode="numeric" />
-                <span class="mini">一對一次數</span>
-              </td>
-              <td class="col-score">
-                <div class="scorebox"><small>分數</small><span id="score-one2one">0</span></div>
-              </td>
-            </tr>
+            // 輔助函式：用來更新換算文字顯示
+            function updateProjText(id, rawVal, projVal, isCurrency = false) {
+                let el = document.getElementById(id);
+                if (rawVal === 0 || !isProrated || isNaN(rawVal)) {
+                    el.style.display = 'none';
+                } else {
+                    el.style.display = 'block';
+                    let displayVal = isCurrency ? Math.round(projVal).toLocaleString() : projVal.toFixed(1);
+                    el.innerText = `🔄 動態換算26週基準: 相當於 ${displayVal}`;
+                }
+            }
 
-            <tr>
-              <td class="col-item">
-                <div class="item">
-                  <div class="icon"><span>🧑‍🤝‍🧑</span></div>
-                  <div>4) 來賓數量</div>
-                </div>
-                <span class="mini">滿分：25 分（調高）</span>
-              </td>
-              <td class="col-rule">
-                <div class="rule">
-                  輸入「累積來賓數」：
-                  <ul>
-                    <li>≥ 5 位：25 分</li>
-                    <li>4 位：20 分</li>
-                    <li>3 位：15 分</li>
-                    <li>2 位：10 分</li>
-                    <li>1 位：5 分</li>
-                    <li>0 位：0 分</li>
-                  </ul>
-                </div>
-              </td>
-              <td class="col-input">
-                <input id="guests" type="number" min="0" step="1" value="0" inputmode="numeric" />
-                <span class="mini">來賓人數</span>
-              </td>
-              <td class="col-score">
-                <div class="scorebox"><small>分數</small><span id="score-guests">0</span></div>
-              </td>
-            </tr>
+            // 1. 出缺席 (Absence)
+            let raw1 = parseFloat(document.getElementById('input1').value);
+            let v1 = isNaN(raw1) ? 0 : raw1 * multiplier;
+            let s1 = 0;
+            resetBadges('badge1');
+            if (v1 <= 1.01) { s1 = 10; activeBadge('badge1-1'); } // 容許浮點數誤差
+            else if (v1 <= 3.01) { s1 = 5; activeBadge('badge1-2'); }
+            else { s1 = 0; activeBadge('badge1-3'); }
+            updateScore('score1', s1);
+            updateProjText('proj1', raw1, v1);
+            total += s1;
 
-            <tr>
-              <td class="col-item">
-                <div class="item">
-                  <div class="icon"><span>✨</span></div>
-                  <div>5) 來賓入會</div>
-                </div>
-                <span class="mini">加分：+5 分</span>
-              </td>
-              <td class="col-rule">
-                <div class="rule">
-                  輸入「半年內是否成功讓來賓入會」：
-                  <ul>
-                    <li>是（≥ 1 位）：+5 分</li>
-                    <li>否（0 位）：0 分</li>
-                  </ul>
-                </div>
-              </td>
-              <td class="col-input">
-                <input id="guestToMember" type="number" min="0" step="1" value="0" inputmode="numeric" />
-                <span class="mini">成功入會人數</span>
-              </td>
-              <td class="col-score">
-                <div class="scorebox"><small>分數</small><span id="score-guestToMember">0</span></div>
-              </td>
-            </tr>
+            // 2. 培訓 (CEU)
+            let raw2 = parseFloat(document.getElementById('input2').value);
+            let v2 = isNaN(raw2) ? 0 : raw2 * multiplier;
+            let s2 = 0;
+            resetBadges('badge2');
+            if (v2 >= 12) { s2 = 10; activeBadge('badge2-1'); }
+            else if (v2 >= 1) { s2 = 5; activeBadge('badge2-2'); }
+            else { s2 = 0; activeBadge('badge2-3'); }
+            updateScore('score2', s2);
+            updateProjText('proj2', raw2, v2);
+            total += s2;
 
-            <tr>
-              <td class="col-item">
-                <div class="item">
-                  <div class="icon"><span>🧾</span></div>
-                  <div>6) 給引薦</div>
-                </div>
-                <span class="mini">滿分：25 分（調高）</span>
-              </td>
-              <td class="col-rule">
-                <div class="rule">
-                  輸入「引薦張數」：
-                  <ul>
-                    <li>≥ 33 張：25 分</li>
-                    <li>26–32 張：20 分</li>
-                    <li>20–25 張：15 分</li>
-                    <li>13–19 張：10 分</li>
-                    <li>7–12 張：5 分</li>
-                    <li>0–6 張：0 分</li>
-                  </ul>
-                </div>
-              </td>
-              <td class="col-input">
-                <input id="referrals" type="number" min="0" step="1" value="0" inputmode="numeric" />
-                <span class="mini">引薦張數</span>
-              </td>
-              <td class="col-score">
-                <div class="scorebox"><small>分數</small><span id="score-referrals">0</span></div>
-              </td>
-            </tr>
+            // 3. 一對一 (1-to-1)
+            let raw3 = parseFloat(document.getElementById('input3').value);
+            let v3 = isNaN(raw3) ? 0 : raw3 * multiplier;
+            let s3 = 0;
+            resetBadges('badge3');
+            if (v3 >= 26) { s3 = 20; activeBadge('badge3-1'); }
+            else if (v3 >= 20) { s3 = 15; activeBadge('badge3-2'); }
+            else if (v3 >= 13) { s3 = 10; activeBadge('badge3-3'); }
+            else if (v3 >= 7) { s3 = 5; activeBadge('badge3-4'); }
+            updateScore('score3', s3);
+            updateProjText('proj3', raw3, v3);
+            total += s3;
 
-            <tr>
-              <td class="col-item">
-                <div class="item">
-                  <div class="icon"><span>💰</span></div>
-                  <div>7) 引薦金額</div>
-                </div>
-                <span class="mini">滿分：5 分（調降）</span>
-              </td>
-              <td class="col-rule">
-                <div class="rule">
-                  輸入「半年內感謝單總金額（元）」：
-                  <ul>
-                    <li>≥ 780,000：5 分</li>
-                    <li>&gt; 390,000 且 &lt; 780,000：4 分</li>
-                    <li>&gt; 130,000 且 &lt; 390,000：3 分</li>
-                    <li>&gt; 52,000 且 &lt; 130,000：2 分</li>
-                    <li>&gt; 0 且 &lt; 52,000：1 分</li>
-                    <li>0：0 分</li>
-                  </ul>
-                </div>
-              </td>
-              <td class="col-input">
-                <input id="thanksAmount" type="number" min="0" step="1" value="0" inputmode="numeric" />
-                <span class="mini">金額（元）</span>
-              </td>
-              <td class="col-score">
-                <div class="scorebox"><small>分數</small><span id="score-thanksAmount">0</span></div>
-              </td>
-            </tr>
+            // 4. 來賓 (Visitors)
+            let raw4 = parseFloat(document.getElementById('input4').value);
+            let v4 = isNaN(raw4) ? 0 : raw4 * multiplier;
+            let s4 = 0;
+            resetBadges('badge4');
+            if (v4 >= 5) { s4 = 25; activeBadge('badge4-1'); }
+            else if (v4 >= 4) { s4 = 20; activeBadge('badge4-2'); }
+            else if (v4 >= 3) { s4 = 15; activeBadge('badge4-3'); }
+            else if (v4 >= 2) { s4 = 10; activeBadge('badge4-4'); }
+            else if (v4 >= 1) { s4 = 5; activeBadge('badge4-5'); }
+            updateScore('score4', s4);
+            updateProjText('proj4', raw4, v4);
+            total += s4;
 
-          </tbody>
-        </table>
-      </div>
-    </section>
+            // 5. 來賓入會 (Sponsoring)
+            let raw5 = parseFloat(document.getElementById('input5').value);
+            let v5 = isNaN(raw5) ? 0 : raw5 * multiplier;
+            let s5 = 0;
+            resetBadges('badge5');
+            if (v5 >= 1) { s5 = 5; activeBadge('badge5-1'); }
+            else { activeBadge('badge5-2'); }
+            updateScore('score5', s5);
+            updateProjText('proj5', raw5, v5);
+            total += s5;
 
-    <!-- Right: results -->
-    <aside class="card side">
-      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
-        <div>
-          <div class="pill">🧮 自動加總</div>
-          <div class="big"><span id="totalScore">0</span> <span style="font-size:16px; color:var(--sub); font-weight:700;">/ 100</span></div>
-          <div class="muted">
-            將上方數據填入後，系統會依規則自動計算總分與燈號。<br/>
-            ✅ 建議：每次分會結束就更新一次，隨時掌握自己的節奏。
-          </div>
-        </div>
-      </div>
+            // 6. 給引薦 (Referrals)
+            let raw6 = parseFloat(document.getElementById('input6').value);
+            let v6 = isNaN(raw6) ? 0 : raw6 * multiplier;
+            let s6 = 0;
+            resetBadges('badge6');
+            if (v6 >= 33) { s6 = 25; activeBadge('badge6-1'); }
+            else if (v6 >= 26) { s6 = 20; activeBadge('badge6-2'); }
+            else if (v6 >= 20) { s6 = 15; activeBadge('badge6-3'); }
+            else if (v6 >= 13) { s6 = 10; activeBadge('badge6-4'); }
+            else if (v6 >= 7) { s6 = 5; activeBadge('badge6-5'); }
+            updateScore('score6', s6);
+            updateProjText('proj6', raw6, v6);
+            total += s6;
 
-      <div class="light-wrap" aria-live="polite">
-        <div class="light" id="trafficLight"></div>
-        <div class="light-label">
-          <b id="lightName">灰燈</b>
-          <span id="lightRange">總分 0–29</span>
-        </div>
-      </div>
+            // 7. 金額 (TYFCB)
+            let raw7 = parseFloat(document.getElementById('input7').value);
+            let v7 = isNaN(raw7) ? 0 : raw7 * multiplier;
+            let s7 = 0;
+            resetBadges('badge7');
+            if (v7 >= 780000) { s7 = 5; activeBadge('badge7-1'); }
+            else if (v7 >= 390000) { s7 = 4; activeBadge('badge7-2'); }
+            else if (v7 >= 130000) { s7 = 3; activeBadge('badge7-3'); }
+            else if (v7 >= 52000) { s7 = 2; activeBadge('badge7-4'); }
+            else if (v7 >= 1) { s7 = 1; activeBadge('badge7-5'); }
+            updateScore('score7', s7);
+            updateProjText('proj7', raw7, v7, true);
+            total += s7;
 
-      <div class="legend">
-        <h3>燈號對照</h3>
-        <div class="rows">
-          <div class="lg-row"><div style="display:flex; align-items:center; gap:8px;"><span class="dot gray"></span>灰燈</div><div>0–29</div></div>
-          <div class="lg-row"><div style="display:flex; align-items:center; gap:8px;"><span class="dot red"></span>紅燈</div><div>30–49</div></div>
-          <div class="lg-row"><div style="display:flex; align-items:center; gap:8px;"><span class="dot yellow"></span>黃燈</div><div>50–69</div></div>
-          <div class="lg-row"><div style="display:flex; align-items:center; gap:8px;"><span class="dot green"></span>綠燈</div><div>70–100</div></div>
-        </div>
-      </div>
+            // Update Total and UI
+            let scoreEl = document.getElementById('totalScore');
+            scoreEl.innerText = total;
+            
+            // Add pop animation
+            scoreEl.classList.remove('pop');
+            void scoreEl.offsetWidth; // trigger reflow
+            scoreEl.classList.add('pop');
 
-      <div class="actions">
-        <button class="btn-primary" id="btnCopy">📋 複製目前總分與燈號</button>
-        <button class="btn-ghost" id="btnReset">↩️ 全部歸零</button>
-      </div>
+            updateTrafficLight(total);
+        }
 
-      <p class="muted" style="margin-top: 12px;">
-        🔎 <b>小提醒</b>：本頁不會上傳你的資料，所有計算都在你的裝置本地完成。
-      </p>
-    </aside>
-  </main>
+        function updateScore(id, score) {
+            document.getElementById(id).innerText = score + " 分";
+        }
 
-  <footer>
-    使用方式：打開 <span class="kbd">Connect APP</span> → 選擇 <span class="kbd">6個月</span> 統計 → 將數字輸入本頁即可。<br/>
-    若分會規則更新，你可以直接修改本檔案（HTML）中的規則區塊與計算邏輯。
-  </footer>
+        function resetBadges(prefix) {
+            let badges = document.querySelectorAll(`[id^="${prefix}-"]`);
+            badges.forEach(b => b.classList.remove('active'));
+        }
 
-  <script>
-    const $ = (id) => document.getElementById(id);
+        function activeBadge(id) {
+            let el = document.getElementById(id);
+            if(el) el.classList.add('active');
+        }
 
-    function clamp(n, min, max){
-      n = Number.isFinite(n) ? n : 0;
-      return Math.max(min, Math.min(max, n));
-    }
-
-    function calcAbsences(absences){
-      if (absences <= 1) return 10;
-      if (absences <= 3) return 5;
-      return 0;
-    }
-
-    function calcCredits(credits){
-      if (credits > 12) return 10;
-      if (credits >= 1) return 5;
-      return 0;
-    }
-
-    function calcOne2One(n){
-      if (n >= 26) return 20;
-      if (n >= 20) return 15;
-      if (n >= 13) return 10;
-      if (n >= 7) return 5;
-      return 0;
-    }
-
-    function calcGuests(n){
-      if (n >= 5) return 25;
-      if (n === 4) return 20;
-      if (n === 3) return 15;
-      if (n === 2) return 10;
-      if (n === 1) return 5;
-      return 0;
-    }
-
-    function calcGuestToMember(n){
-      return (n >= 1) ? 5 : 0;
-    }
-
-    function calcReferrals(n){
-      if (n >= 33) return 25;
-      if (n >= 26) return 20;
-      if (n >= 20) return 15;
-      if (n >= 13) return 10;
-      if (n >= 7) return 5;
-      return 0;
-    }
-
-    function calcThanksAmount(amount){
-      if (amount >= 780000) return 5;
-      if (amount > 390000) return 4;
-      if (amount > 130000) return 3;
-      if (amount > 52000) return 2;
-      if (amount > 0) return 1;
-      return 0;
-    }
-
-    function getLight(total){
-      // 0–29 gray, 30–49 red, 50–69 yellow, 70–100 green
-      if (total >= 70) return {name:"綠燈", range:"總分 70–100", color:"#22c55e"};
-      if (total >= 50) return {name:"黃燈", range:"總分 50–69", color:"#f59e0b"};
-      if (total >= 30) return {name:"紅燈", range:"總分 30–49", color:"#ef4444"};
-      return {name:"灰燈", range:"總分 0–29", color:"#9ca3af"};
-    }
-
-    function readInputs(){
-      return {
-        absences: clamp(parseInt($("absences").value || "0", 10), 0, 9999),
-        credits: clamp(parseFloat($("credits").value || "0"), 0, 9999),
-        one2one: clamp(parseInt($("one2one").value || "0", 10), 0, 9999),
-        guests: clamp(parseInt($("guests").value || "0", 10), 0, 9999),
-        guestToMember: clamp(parseInt($("guestToMember").value || "0", 10), 0, 9999),
-        referrals: clamp(parseInt($("referrals").value || "0", 10), 0, 9999),
-        thanksAmount: clamp(parseInt($("thanksAmount").value || "0", 10), 0, 999999999),
-      };
-    }
-
-    function update(){
-      const v = readInputs();
-
-      const s1 = calcAbsences(v.absences);
-      const s2 = calcCredits(v.credits);
-      const s3 = calcOne2One(v.one2one);
-      const s4 = calcGuests(v.guests);
-      const s5 = calcGuestToMember(v.guestToMember);
-      const s6 = calcReferrals(v.referrals);
-      const s7 = calcThanksAmount(v.thanksAmount);
-
-      $("score-absences").textContent = s1;
-      $("score-credits").textContent = s2;
-      $("score-one2one").textContent = s3;
-      $("score-guests").textContent = s4;
-      $("score-guestToMember").textContent = s5;
-      $("score-referrals").textContent = s6;
-      $("score-thanksAmount").textContent = s7;
-
-      let total = s1 + s2 + s3 + s4 + s5 + s6 + s7;
-      total = clamp(total, 0, 100); // safety
-      $("totalScore").textContent = total;
-
-      const light = getLight(total);
-      $("trafficLight").style.background = light.color;
-      $("lightName").textContent = light.name;
-      $("lightRange").textContent = light.range;
-    }
-
-    // Bind events
-    ["absences","credits","one2one","guests","guestToMember","referrals","thanksAmount"].forEach(id=>{
-      $(id).addEventListener("input", update);
-      $(id).addEventListener("change", update);
-    });
-
-    $("btnReset").addEventListener("click", ()=>{
-      ["absences","credits","one2one","guests","guestToMember","referrals","thanksAmount"].forEach(id=>{
-        $(id).value = 0;
-      });
-      update();
-    });
-
-    $("btnCopy").addEventListener("click", async ()=>{
-      const total = $("totalScore").textContent;
-      const name = $("lightName").textContent;
-      const text = `BNI 2026 新制紅綠燈成績：${total} 分（${name}）`;
-      try{
-        await navigator.clipboard.writeText(text);
-        $("btnCopy").textContent = "✅ 已複製";
-        setTimeout(()=> $("btnCopy").textContent = "📋 複製目前總分與燈號", 1400);
-      }catch(e){
-        alert("你的瀏覽器不允許自動複製。請手動選取並複製：\n" + text);
-      }
-    });
-
-    // Initial render
-    update();
-  </script>
+        function updateTrafficLight(score) {
+            const light = document.getElementById('lightIcon');
+            const face = document.getElementById('face');
+            const status = document.getElementById('statusText');
+            
+            if (score >= 70) {
+                light.style.backgroundColor = "var(--traffic-green)";
+                face.innerText = "😎";
+                status.innerText = "綠燈 - 績效卓越";
+                status.style.color = "var(--traffic-green)";
+            } else if (score >= 50) {
+                light.style.backgroundColor = "var(--traffic-yellow)";
+                face.innerText = "🙂";
+                status.innerText = "黃燈 - 漸入佳境";
+                status.style.color = "var(--traffic-yellow)";
+            } else if (score >= 30) {
+                light.style.backgroundColor = "var(--traffic-red)";
+                face.innerText = "😨";
+                status.innerText = "紅燈 - 再接再厲";
+                status.style.color = "var(--traffic-red)";
+            } else {
+                light.style.backgroundColor = "var(--traffic-grey)";
+                face.innerText = "💀";
+                status.innerText = "灰燈 - 調整一下";
+                status.style.color = "var(--traffic-grey)";
+            }
+        }
+    </script>
 </body>
 </html>
