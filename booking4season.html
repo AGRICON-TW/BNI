@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>抗黃葉、擋黑腐 - 高麗菜強健栽培預防方案</title>
+    <style>
+        :root {
+            --primary-green: #2e7d32;
+            --secondary-green: #4caf50;
+            --light-green: #e8f5e9;
+            --accent-orange: #ff9800;
+            --text-dark: #333;
+            --bg-sand: #fdfbf7;
+        }
+
+        body {
+            font-family: "Microsoft JhengHei", "Heiti TC", sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-sand);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--primary-green);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 5px solid var(--accent-orange);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            font-size: 18px;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+
+        .section {
+            background: white;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            color: var(--primary-green);
+            border-left: 5px solid var(--accent-orange);
+            padding-left: 15px;
+            margin-top: 0;
+            font-size: 22px;
+        }
+
+        /* 三兄弟展示 */
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .product-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: var(--light-green);
+        }
+
+        .product-card h3 {
+            margin-top: 0;
+            color: var(--primary-green);
+            display: flex;
+            align-items: center;
+        }
+
+        .badge {
+            background: var(--accent-orange);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+        /* 表格響應式 */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            min-width: 500px;
+        }
+
+        th, td {
+            border: 1px solid #eee;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--primary-green);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* 提醒區塊 */
+        .tip-box {
+            background-color: #fffde7;
+            border-left: 5px solid #fbc02d;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        /* 訂購區塊 */
+        .price-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px dashed #ccc;
+            font-size: 18px;
+        }
+
+        .price-item strong {
+            color: #d32f2f;
+        }
+
+        .cta-box {
+            text-align: center;
+            background: var(--primary-green);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+        }
+
+        .btn-call {
+            display: inline-block;
+            background: var(--accent-orange);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 50px;
+            margin: 10px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .bank-info {
+            background: #f1f1f1;
+            padding: 15px;
+            color: #333;
+            border-radius: 8px;
+            text-align: left;
+            font-size: 15px;
+            display: inline-block;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        @media (min-width: 600px) {
+            .product-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <h1>抗黃葉、擋黑腐</h1>
+        <p>沙礫地高麗菜強健栽培預防方案</p>
+        <div style="margin-top:15px; font-weight: bold; background: rgba(0,0,0,0.1); display: inline-block; padding: 5px 15px; border-radius: 20px;">
+            益生菌合作三兄弟：強根、防禦、省肥、增重
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    
+    <section class="section">
+        <h2>為什麼沙礫地需要這套方案？</h2>
+        <p>沙礫地種高麗菜有三個大麻煩：<strong>水留不住、肥漏得快、地溫太高。</strong></p>
+        <p>這套「益生菌合作」方案就像為高麗菜請了「專屬兄弟工程隊」，幫您把沙地變肥土，讓菜長得齊、保得住、賣得好。</p>
+    </section>
+
+    <section class="section">
+        <h2>一、 認識神奇三兄弟</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <h3>木黴一號 <span class="badge">保鑣</span></h3>
+                <p>守護地下的保鑣。幫根穿上「盔甲」，讓黃葉病等壞菌沒機會鑽進去，主動清潔土壤，刺激根系生長。</p>
+            </div>
+            <div class="product-card">
+                <h3>活磷勇 <span class="badge">戰士</span></h3>
+                <p>具備雙重身分。是「搬運工」消化營養，也是「戰士」蓋起防護罩，拒絕黃葉病與黑腐病入侵。</p>
+            </div>
+            <div class="product-card">
+                <h3>新光合發 <span class="badge">能量</span></h3>
+                <p>益生菌的「便當」。含有高碳源酵素，能讓菌變強壯，並產生「生物膠水」黏住水分肥料，改善沙地保肥力。</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>二、 全期管理時程表</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>生育階段</th>
+                        <th>建議配比</th>
+                        <th>施作目的</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>0. 整地 (佔領期)</strong></td>
+                        <td>木黴一號＋新光合發</td>
+                        <td>提早清場，建立安全基地</td>
+                    </tr>
+                    <tr>
+                        <td><strong>1. 定植期 (打疫苗)</strong></td>
+                        <td>木黴一號</td>
+                        <td>幫根部穿盔甲，預防黃葉病</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2. 定植後1週 (蓋軍營)</strong></td>
+                        <td>活磷勇 + 新光合發</td>
+                        <td>建立根據地，在沙地站穩腳步</td>
+                    </tr>
+                    <tr>
+                        <td><strong>3. 蓮座期 (發育期)</strong></td>
+                        <td>活磷勇 + 新光合發</td>
+                        <td>挖出更多營養，黏住水分留住肥料錢</td>
+                    </tr>
+                    <tr>
+                        <td><strong>4. 包心期 (保命期)</strong></td>
+                        <td>三者全體出動</td>
+                        <td><strong>預防黑腐病關鍵！</strong> 防止菜心爛掉</td>
+                    </tr>
+                    <tr>
+                        <td><strong>5. 採收前 (變美期)</strong></td>
+                        <td>活磷勇 + 新光合發</td>
+                        <td>最後衝刺，變甜、變脆、變重</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>三、 稀釋使用方式</h2>
+        <ul>
+            <li><strong>木黴一號：</strong> 土壤澆灌 1噸水+500g (2分地用) / 葉面不建議</li>
+            <li><strong>活磷勇：</strong> 土壤澆灌 1噸水+1kg (2分地用) / 葉面 500倍</li>
+            <li><strong>新光合發：</strong> 土壤澆灌 1噸水+2-4公升 (2分地用) / 葉面 500倍</li>
+        </ul>
+    </section>
+
+    <section class="section">
+        <h2>四、 給農友的專業提醒</h2>
+        <div class="tip-box">
+            <strong>💡 菌隨便當走：</strong> 用菌一定要帶「新光合發」。菌吃飽了，工作才賣力！
+        </div>
+        <div class="tip-box">
+            <strong>💡 少量補氮：</strong> 微生物初期會跟菜搶一點營養。若葉子偏黃，搭配一點點氮肥即可。
+        </div>
+        <div class="tip-box">
+            <strong>💡 傍晚施用：</strong> 益生菌怕曬。選下午或傍晚噴灑，濕度高效果翻倍。
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>🛒 產品訂購價格</h2>
+        <ul class="price-list">
+            <li class="price-item"><span>1. 木黴一號 (500g/20包/箱)</span> <strong>$6,000</strong></li>
+            <li class="price-item"><span>2. 活磷勇 (1kg/20包/箱)</span> <strong>$12,000</strong></li>
+            <li class="price-item"><span>3. 新光合發 (20kg/桶)</span> <strong>$3,500</strong></li>
+        </ul>
+    </section>
+
+    <section class="cta-box">
+        <h2>立即訂購</h2>
+        <p>找阿德：說明您要訂購的產品與數量</p>
+        <a href="tel:0928596751" class="btn-call">📞 打電話找阿德 (0928-596751)</a>
+        <p>或加 LINE 聯絡</p>
+        
+        <div class="bank-info">
+            <strong>🏦 匯款帳號資訊：</strong><br>
+            銀行：玉山銀行（808）北屯分行<br>
+            戶名：錸德生物科技有限公司<br>
+            帳號：1388-940-031806
+        </div>
+        
+        <p style="margin-top:20px; font-size: 14px;">🚚 貨運宅配 (黑貓／大榮貨運) | 可貨到付款</p>
+    </section>
+
+    <footer>
+        &copy; 2024 錸德生物科技有限公司 - 專業益生菌栽培方案
+    </footer>
+</div>
+
+</body>
+</html>
