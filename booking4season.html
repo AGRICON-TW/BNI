@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>抗黃葉、擋黑腐 - 四季益生菌高麗菜 強健栽培預防方案</title>
+    <title>抗黃葉、擋黑腐 - 高山高麗菜 強健栽培預防方案</title>
     <style>
         :root {
             --primary-green: #2e7d32;
@@ -12,6 +12,7 @@
             --accent-orange: #ff9800;
             --text-dark: #333;
             --bg-sand: #fdfbf7;
+            --danger-red: #d32f2f;
         }
 
         body {
@@ -70,10 +71,70 @@
             margin-top: 0;
         }
 
-        /* 三兄弟展示區塊 - 加入圖片與排版調整 */
+        /* 圖像化資訊區塊 (財務與問題分析) */
+        .infographic {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        @media (min-width: 600px) {
+            .infographic {
+                flex-direction: row;
+            }
+        }
+
+        .info-card {
+            flex: 1;
+            background: #fff8e1;
+            border-top: 4px solid var(--accent-orange);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .info-card.danger {
+            background: #ffebee;
+            border-top-color: var(--danger-red);
+        }
+
+        .info-card.success {
+            background: #e8f5e9;
+            border-top-color: var(--secondary-green);
+        }
+
+        .info-card h4 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+            color: var(--text-dark);
+        }
+
+        .highlight-number {
+            font-size: 32px;
+            font-weight: 900;
+            margin: 10px 0;
+            line-height: 1.2;
+        }
+
+        .danger .highlight-number { color: var(--danger-red); }
+        .success .highlight-number { color: var(--primary-green); }
+        .warning .highlight-number { color: var(--accent-orange); }
+
+        .info-card p {
+            margin: 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* 三兄弟展示區塊 */
         .product-card {
             display: flex;
-            flex-direction: column; /* 手機版預設：上下排列 */
+            flex-direction: column;
             gap: 20px;
             border: 1px solid #c8e6c9;
             padding: 20px;
@@ -82,32 +143,30 @@
             background-color: #fafdfa;
         }
 
-        /* 產品圖片樣式設定 (300x300) */
         .product-image {
             width: 100%;
-            max-width: 300px; /* 最大寬度 300px */
+            max-width: 300px;
             height: auto;
-            aspect-ratio: 1 / 1; /* 保持正方形 */
-            object-fit: cover; /* 讓圖片填滿且不變形 */
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            align-self: center; /* 在手機版時置中 */
+            align-self: center;
         }
 
         .product-content {
-            flex: 1; /* 讓文字區塊填滿剩下的空間 */
+            flex: 1;
         }
 
-        /* 當螢幕寬度大於 600px 時 (電腦/平板)，改為左右排列 */
         @media (min-width: 600px) {
             .product-card {
-                flex-direction: row; /* 電腦版：左右排列 */
-                align-items: center; /* 垂直置中對齊 */
+                flex-direction: row;
+                align-items: center;
             }
             .product-image {
                 width: 300px;
                 height: 300px;
-                align-self: flex-start; /* 靠上對齊 */
+                align-self: flex-start;
             }
         }
 
@@ -142,7 +201,7 @@
         /* 產品價格區塊 */
         .price-list { list-style: none; padding: 0; }
         .price-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px dashed #ccc; font-size: 18px; }
-        .price-item strong { color: #d32f2f; }
+        .price-item strong { color: var(--danger-red); }
 
         /* 表單設計 */
         .order-form { background-color: #f9fbf9; padding: 25px; border: 2px solid #c8e6c9; border-radius: 12px; margin-top: 20px; }
@@ -151,7 +210,7 @@
         .form-control { width: 100%; padding: 12px; font-size: 16px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
         .product-row { display: flex; justify-content: space-between; align-items: center; background: white; padding: 12px; margin-bottom: 10px; border-radius: 6px; border: 1px solid #ddd; }
         .product-row input[type="number"] { width: 80px; padding: 8px; font-size: 16px; text-align: center; border: 1px solid #aaa; border-radius: 4px;}
-        .total-price-box { text-align: right; font-size: 22px; font-weight: bold; color: #d32f2f; padding: 15px 0; border-top: 2px solid var(--primary-green); margin-top: 15px; }
+        .total-price-box { text-align: right; font-size: 22px; font-weight: bold; color: var(--danger-red); padding: 15px 0; border-top: 2px solid var(--primary-green); margin-top: 15px; }
         .btn-submit { width: 100%; background: var(--accent-orange); color: white; padding: 18px; font-size: 20px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: background 0.3s; }
         .btn-submit:hover { background: #e68a00; }
         .bank-info { background: #f1f1f1; padding: 15px; color: #333; border-radius: 8px; font-size: 16px; margin-bottom: 20px; line-height: 1.8; }
@@ -162,99 +221,113 @@
 
 <header>
     <div class="container">
-        <h1>抗黃葉、擋黑腐</h1>
-        <p>四季益生菌高麗菜強健栽培預防方案</p>
+        <h1>抗高溫萎凋、擋黃葉黑腐</h1>
+        <p>宜蘭四季村 高山高麗菜 益生菌強健護根專屬方案</p>
         <div style="margin-top:15px; font-weight: bold; background: rgba(0,0,0,0.15); display: inline-block; padding: 6px 18px; border-radius: 20px;">
-            益生菌合作三兄弟：強根、防禦、省肥、增重
+            好賣的品種不用換！用益生菌幫它穿防彈衣
         </div>
     </div>
 </header>
 
 <div class="container">
     
+    <!-- 痛點與財務圖像化區塊 -->
     <section class="section">
-        <h2>為什麼沙礫地需要這套方案？</h2>
-        <p>沙礫地種高麗菜有三個大麻煩：<strong>水留不住、肥漏得快、地溫太高。</strong></p>
-        <p>這套「益生菌合作」方案就像為高麗菜請了「專屬兄弟工程隊」，幫您把沙地變肥土，建立守望相助隊，讓菜長得齊、保得住、賣得好。</p>
+        <h2>為什麼高山高麗菜急需這套抗病益生菌方案？</h2>
+        <p>近年氣溫屢創新高，二期高麗菜的「黃葉病（萎凋病）」已成隱形強盜。面對<strong>「好賣的品種種不活，耐病的品種沒人要」</strong>的困境，妥協換品種，每箱價差高達 200 元。這不僅是農務問題，更是<strong>嚴重的利潤流失</strong>。</p>
+        
+        <div class="infographic">
+            <div class="info-card danger">
+                <h4>💸 每日猶豫的代價</h4>
+                <div class="highlight-number">-2,160 <span style="font-size:16px;">元/分地</span></div>
+                <p>以二期均價800元計，發病率每增1%，每分地直接蒸發近 2.7 箱產值。每拖一日，損失擴大2%↑</p>
+            </div>
+            
+            <div class="info-card warning">
+                <h4>🛡️ 防禦投資成本</h4>
+                <div class="highlight-number">約 4,000 <span style="font-size:16px;">元/分地</span></div>
+                <p>不換品種！利用「三菌一營養」建立土壤立體防護網，強健根系抵抗高溫病害。</p>
+            </div>
+
+            <div class="info-card success">
+                <h4>📈 超高投資報酬率</h4>
+                <div class="highlight-number">救 5 箱 <span style="font-size:16px;">即回本</span></div>
+                <p>採收時只要多救回 5 箱高價好品種高麗菜，資材成本全數回本，剩下全是純利。</p>
+            </div>
+        </div>
     </section>
 
-    <!-- 神奇三兄弟詳細介紹 (加入 300x300 圖片) -->
+    <!-- 神奇三兄弟詳細介紹 -->
     <section class="section">
-        <h2>一、 認識神奇三兄弟</h2>
+        <h2>一、 認識抗黃葉神奇三兄弟</h2>
         
         <div class="product-card">
-            <!-- 產品 1 圖片：請將 src="網址" 替換成真實圖片網址 -->
             <img src="https://agricon-tw.github.io/BNI/image/mmno1.png" alt="木黴一號" class="product-image">
-            
             <div class="product-content">
-                <h3>1. 木黴一號 <span class="badge">根部保鑣</span></h3>
-                <p><strong>工作：</strong> 它是負責守護地下的保鑣。會緊緊抱住根部生長，幫根穿上「盔甲」，讓黃葉病等壞菌沒機會鑽進去；也會主動追擊土壤中的有害真菌菌絲，清潔土壤。同時還能刺激根系長得更多、更深。</p>
+                <h3>1. 木黴一號 <span class="badge">翻堆清源 搶地盤</span></h3>
+                <p><strong>工作：</strong> 負責守護地下的主力保鑣。翻耕時加入，能在土壤裡預先佔領地盤，把黃葉病菌的生存空間擠掉，並幫高麗菜幼根穿上「盔甲」，讓萎凋病菌無法從根部傷口入侵。</p>
             </div>
         </div>
         
         <div class="product-card">
-            <!-- 產品 2 圖片：請將 src="網址" 替換成真實圖片網址 -->
             <img src="https://agricon-tw.github.io/BNI/image/holinyung.png" alt="活磷勇" class="product-image">
-            
             <div class="product-content">
-                <h3>2. 活磷勇 <span class="badge">全能戰士</span></h3>
-                <p><strong>工作：</strong> 它具備雙重身分。平時是「搬運工」，把土裡被鎖住的營養消化一下再拿給高麗菜吃；遇到壞菌時是「戰士」，會蓋起防護罩保護根系表面拒絕黃頁病菌直接入侵，以及葉子不被黑腐病吃掉。</p>
+                <h3>2. 活磷勇 <span class="badge">根系護體 防護罩</span></h3>
+                <p><strong>工作：</strong> 它是沾根與首灌的關鍵戰士！會在根部表面形成一層緊密的「生物膜」，直接將殘存的病原菌阻絕在外，同時分泌抗生物質。對於中後期的黑腐病也能產生極佳的競爭壓制力。</p>
             </div>
         </div>
         
         <div class="product-card">
-            <!-- 產品 3 圖片：請將 src="網址" 替換成真實圖片網址 -->
             <img src="https://agricon-tw.github.io/BNI/image/nkhf.png" alt="新光合發" class="product-image">
-            
             <div class="product-content">
-                <h3>3. 新光合發 <span class="badge">超級能量</span></h3>
-                <p><strong>工作：</strong> 它是益生菌的「便當」。沙地有高麗菜，病菌吃菜，但是沙地沒養分沒有機質，菌會餓死，餵它們吃這個會變得很強壯。它還能產出「生物膠水」，把沙子黏住，讓水分和肥料不再輕易流失（保肥）。</p>
+                <h3>3. 新光合發 <span class="badge">抗熱應激 超能量</span></h3>
+                <p><strong>工作：</strong> 山區高溫期作物的「運動飲料」。它提供即時的碳源與能量，讓高麗菜在酷暑下維持生理活性，不因熱應激而導致免疫力下降。同時也是木黴菌與活磷勇的「超級便當」，讓益生菌在土裡活得更久、戰鬥力更強。</p>
             </div>
         </div>
     </section>
 
     <!-- 時程表 -->
     <section class="section">
-        <h2>二、 全期管理時程表</h2>
+        <h2>二、 黃葉病防禦管理時程表</h2>
         <div class="table-container">
             <table>
                 <thead>
                     <tr>
                         <th>生育階段</th>
                         <th>建議配比</th>
-                        <th>為什麼要這樣做？</th>
+                        <th>為什麼要這樣做？ (防禦重點)</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>0. 整地 (佔領期)</strong></td>
+                        <td><strong>0. 整地 (清源期)</strong></td>
                         <td>木黴一號＋新光合發</td>
-                        <td>提早讓戰士帶著資源，進入田區清場，建立安全基地範圍。</td>
+                        <td>黃葉病為土傳性病害。提早讓戰士帶著資源進入田區清場，大幅降低土壤中病原菌基礎量。</td>
                     </tr>
                     <tr>
-                        <td><strong>1. 定植期 (打疫苗)</strong></td>
-                        <td>木黴一號</td>
-                        <td>就像幫小嬰兒打疫苗，讓根部一開始就穿好盔甲，預防黃葉病。</td>
+                        <td><strong>1. 定植期 (穿盔甲)</strong></td>
+                        <td>液化澱粉芽孢桿菌 / 活磷勇沾根</td>
+                        <td>高溫定植極易受傷感染。沾根就像幫小苗穿防護衣，確保下田第一時間就有益菌保護傷口。</td>
                     </tr>
                     <tr>
-                        <td><strong>2. 定植後1週 (蓋軍營)</strong></td>
+                        <td><strong>2. 定植後1-2週 (紮營期)</strong></td>
                         <td>活磷勇 + 新光合發</td>
-                        <td>給戰士吃便當，在根部建立強大根據地。幫高麗菜在沙地站穩腳步。</td>
+                        <td>給戰士補充便當，在根部建立強大根據地，隨根系發展又深又廣，抓地力強就不怕萎凋。</td>
                     </tr>
                     <tr>
                         <td><strong>3. 蓮座期 (發育期)</strong></td>
                         <td>活磷勇 + 新光合發</td>
-                        <td>高麗菜肚子最餓的時候。幫它挖出更多營養，並把沙子黏住，留住肥料錢。</td>
+                        <td>氣溫若持續飆高，新光合發能為高麗菜提供抗熱能量，避免免疫系統崩潰讓病菌趁虛而入。</td>
                     </tr>
                     <tr>
                         <td><strong>4. 包心期 (保命期)</strong></td>
                         <td>三者全體出動</td>
-                        <td><strong>黑腐病預防關鍵！</strong>全體出動蓋厚防護罩，防止菜心爛掉。</td>
+                        <td><strong>黑腐病與高溫腐爛預防關鍵！</strong>加強葉面與根部防護，防止菜心因高溫濕熱而爛掉。</td>
                     </tr>
                     <tr>
-                        <td><strong>5. 採收前 (變美期)</strong></td>
+                        <td><strong>5. 採收前 (衝刺期)</strong></td>
                         <td>活磷勇 + 新光合發</td>
-                        <td>最後衝刺。讓高麗菜變甜、變脆、變重，賣相第一名。</td>
+                        <td>最後衝刺，確保重量達標、良率突破九成，穩穩拿下單箱800元的高回報。</td>
                     </tr>
                 </tbody>
             </table>
@@ -268,21 +341,21 @@
             <li><strong>木黴一號：</strong> 土壤澆灌：一噸水加入500公克，兩分地使用 ／ 葉面施肥：不建議。</li>
             <li><strong>活磷勇：</strong> 土壤澆灌：一噸水加入1公斤，兩分地使用 ／ 葉面施肥：稀釋500倍。</li>
             <li><strong>新光合發：</strong> 土壤澆灌：一噸水加入2-4公升，兩分地使用 ／ 葉面施肥：稀釋500倍。</li>
-            <li><strong>使用頻率：</strong> 每20-30天，使用一次／天氣劇烈變化前一週請加強使用！</li>
+            <li><strong>使用頻率：</strong> 每7-10天（發病好發期）至20天使用一次／<strong>土溫飆高超過28度時請務必加強灌施！</strong></li>
         </ul>
     </section>
 
     <!-- 專業提醒 -->
     <section class="section">
-        <h2>四、 給農友的專業提醒</h2>
+        <h2>四、 給農友的經營與操作提醒</h2>
         <div class="tip-box">
-            <strong>💡「菌隨有機質（便當）走」：</strong> 用木黴菌或活磷勇時，一定要帶便當（新光合發）。菌吃飽了，工作才賣力！
+            <strong>💡「防護勝於治療」：</strong> 黃葉病一旦發病萎凋，救回來的機率極低。這套SOP的核心在於「發病前預防」，切勿等到出現死棵才開始投藥！
         </div>
         <div class="tip-box">
-            <strong>💡 少量補氮：</strong> 便當（新光合發）很好，但微生物一開始也會跟高麗菜搶一點營養（肥料）。如果葉子一開始看起來比較黃，下次記得搭配一點點氮肥，菜就會開心了。
+            <strong>💡「菌隨便當走」：</strong> 單用菌種效果有限，一定要搭配「新光合發」提供碳源。菌吃飽了，繁殖速度才能快過黃葉病菌！
         </div>
         <div class="tip-box">
-            <strong>💡 傍晚施用：</strong> 這些益生菌怕曬怕乾。選在下午或傍晚噴灑，濕度高一點，效果會翻倍。
+            <strong>💡 傍晚或陰天施用：</strong> 益生菌怕紫外線直射與極度乾燥。選在下午或傍晚噴灑、灌頭，土壤濕度高一點，菌種定殖存活率會翻倍。
         </div>
     </section>
 
