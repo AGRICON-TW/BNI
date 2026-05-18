@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>農讀・生物資材系列 | 三作物類型菌種應用策略快查表</title>
+    <style>
+        :root {
+            --bg-primary: #f4f7f5;
+            --text-main: #2c3e50;
+            --green-dark: #1e4620;
+            --green-mid: #2e7d32;
+            --green-light: #e8f5e9;
+            --pear-color: #859a00;
+            --cucumber-color: #00897b;
+            --corn-color: #f57c00;
+            --risk-high: #d32f2f;
+            --risk-high-bg: #ffebee;
+            --risk-med: #f57c00;
+            --risk-med-bg: #fff3e0;
+            --risk-low: #388e3c;
+            --risk-low-bg: #e8f5e9;
+            --card-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft JhengHei", sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header Style */
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, var(--green-dark), var(--green-mid));
+            color: white;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+        }
+
+        header h1 {
+            font-size: 24px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            font-size: 15px;
+            opacity: 0.9;
+        }
+
+        .version-badge {
+            display: inline-block;
+            background-color: #ffb300;
+            color: #333;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 20px;
+            color: var(--green-dark);
+            margin: 30px 0 15px 0;
+            border-left: 5px solid var(--green-mid);
+            padding-left: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Grid Layout for Crop Cards */
+        .crop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .crop-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            border-top: 6px solid var(--theme-color);
+            transition: transform 0.2s ease;
+        }
+
+        .crop-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .crop-card-header {
+            padding: 20px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.02), transparent);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .crop-icon {
+            font-size: 36px;
+        }
+
+        .crop-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--text-main);
+        }
+
+        .crop-type {
+            font-size: 13px;
+            color: #7f8c8d;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        /* Microbe Rank styling */
+        .microbe-rank {
+            background: #fafafa;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+
+        .rank-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .rank-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .medal {
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-right: 10px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .gold { background: #ffe082; color: #7f6000; }
+        .silver { background: #e0e0e0; color: #616161; }
+        .bronze { background: #ffcc80; color: #e65100; }
+
+        /* Quick Info Badges */
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
+            font-size: 14px;
+        }
+
+        .info-label {
+            color: #7f8c8d;
+        }
+
+        .info-value {
+            font-weight: 500;
+        }
+
+        .badge {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .bg-high { background-color: var(--risk-high-bg); color: var(--risk-high); }
+        .bg-med { background-color: var(--risk-med-bg); color: var(--risk-med); }
+        .bg-low { background-color: var(--risk-low-bg); color: var(--risk-low); }
+
+        /* Disease Block */
+        .disease-box {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .disease-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+
+        .disease-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .disease-tag {
+            background: #f1f2f6;
+            color: #57606f;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        /* Matrix Table Style */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 40px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: var(--green-dark);
+            color: white;
+            padding: 14px 16px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background-color: #fdfdfd;
+        }
+
+        .table-crop-header {
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 15px;
+        }
+
+        .timing-highlight {
+            background-color: #fffde7;
+            border-left: 3px solid #fdd835;
+            padding-left: 6px;
+        }
+        
+        .strategy-block {
+            margin-bottom: 6px;
+        }
+        .strategy-block span {
+            font-weight: bold;
+            color: var(--green-mid);
+        }
+
+        /* Footer Style */
+        footer {
+            margin-top: 40px;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, var(--green-mid), var(--green-dark));
+            color: white;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+        }
+
+        .footer-designer {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-contacts {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            font-size: 14px;
+        }
+
+        .footer-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .footer-contacts a {
+            color: #ffb300;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .footer-contacts a:hover {
+            color: #ffa000;
+            text-decoration: underline;
+        }
+
+        .line-badge {
+            background-color: #06c755;
+            color: white !important;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            text-decoration: none !important;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .line-badge:hover {
+            background-color: #05b34c;
+        }
+
+        @media (max-width: 768px) {
+            th { display: none; }
+            table, tbody, tr, td { display: block; width: 100%; }
+            tr {
+                margin-bottom: 20px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            }
+            td {
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+                border-bottom: 1px solid #eee;
+            }
+            td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 16px;
+                width: 45%;
+                text-align: left;
+                font-weight: bold;
+                color: #7f8c8d;
+            }
+            .footer-contacts {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 主標題區 -->
+        <header>
+            <h1>農讀・生物資材系列</h1>
+            <p>EP.29-戰場不同，上場的菌種也不同！三作物菌種應用策略快查手冊</p>
+            <div class="version-badge">⚙️ 專業校正版 v3</div>
+        </header>
+
+        <!-- 區段一：作物視覺化卡片 -->
+        <div class="section-title">📊 核心作物策略卡（快速導覽）</div>
+        
+        <div class="crop-grid">
+            <!-- 水梨卡片 -->
+            <div class="crop-card" style="--theme-color: var(--pear-color);">
+                <div class="crop-card-header">
+                    <span class="crop-icon">🍐</span>
+                    <div>
+                        <div class="crop-name">水梨</div>
+                        <div class="crop-type">多年生果樹（長期經營）</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="microbe-rank">
+                        <div class="rank-item"><span class="medal gold">1</span> <strong>菌根菌</strong> (核心定位)</div>
+                        <div class="rank-item"><span class="medal silver">2</span> 木黴菌</div>
+                        <div class="rank-item"><span class="medal bronze">3</span> 枯草桿菌</div>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">黃金施用期</span>
+                        <span class="info-value timing-highlight">冬末春初萌芽前</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">連作風險</span>
+                        <span class="info-value"><span class="badge bg-med">中 (長期累積)</span></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">耕犁影響</span>
+                        <span class="info-value">低 (多年生免耕)</span>
+                    </div>
+                    <div class="disease-box">
+                        <div class="disease-title">主要土傳 / 葉面病害</div>
+                        <div class="disease-tags">
+                            <span class="disease-tag">白紋羽病</span>
+                            <span class="disease-tag">褐根病</span>
+                            <span class="disease-tag">赤星病</span>
+                            <span class="disease-tag">黑星病</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 小黃瓜卡片 -->
+            <div class="crop-card" style="--theme-color: var(--cucumber-color);">
+                <div class="crop-card-header">
+                    <span class="crop-icon">🥒</span>
+                    <div>
+                        <div class="crop-name">小黃瓜 (胡瓜)</div>
+                        <div class="crop-type">短作蔬菜（高速循環）</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="microbe-rank">
+                        <div class="rank-item"><span class="medal gold">1</span> <strong>木黴菌</strong> (核心定位)</div>
+                        <div class="rank-item"><span class="medal silver">2</span> 枯草桿菌</div>
+                        <div class="rank-item"><span class="medal bronze">3</span> 溶磷菌</div>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">黃金施用期</span>
+                        <span class="info-value timing-highlight">定植前整地後</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">連作風險</span>
+                        <span class="info-value"><span class="badge bg-high">高 (短期爆發)</span></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">耕犁影響</span>
+                        <span class="info-value">高 (頻繁整地)</span>
+                    </div>
+                    <div class="disease-box">
+                        <div class="disease-title">主要土傳 / 葉面病害</div>
+                        <div class="disease-tags">
+                            <span class="disease-tag">萎凋病</span>
+                            <span class="disease-tag">露菌病</span>
+                            <span class="disease-tag">白粉病</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 玉米卡片 -->
+            <div class="crop-card" style="--theme-color: var(--corn-color);">
+                <div class="crop-card-header">
+                    <span class="crop-icon">🌽</span>
+                    <div>
+                        <div class="crop-name">玉米</div>
+                        <div class="crop-type">雜糧作物（固氮紅利）</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="microbe-rank">
+                        <div class="rank-item"><span class="medal gold">1</span> <strong>菌根菌</strong> (核心定位)</div>
+                        <div class="rank-item"><span class="medal silver">2</span> 固氮菌</div>
+                        <div class="rank-item"><span class="medal bronze">3</span> 溶磷菌</div>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">黃金施用期</span>
+                        <span class="info-value timing-highlight">播種期拌種</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">連作風險</span>
+                        <span class="info-value"><span class="badge bg-low">低 (輪作可控)</span></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">耕犁影響</span>
+                        <span class="info-value">中 (季節性翻耕)</span>
+                    </div>
+                    <div class="disease-box">
+                        <div class="disease-title">主要土傳 / 葉面病害</div>
+                        <div class="disease-tags">
+                            <span class="disease-tag">莖腐病</span>
+                            <span class="disease-tag">紋枯病</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 區段二：完整對照矩陣 -->
+        <div class="section-title">📋 全方位應用策略大矩陣 (詳細對照)</div>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 15%">管理項目</th>
+                        <th style="width: 28%">水梨（果樹）</th>
+                        <th style="width: 28%">小黃瓜（果菜）</th>
+                        <th style="width: 28%">玉米（雜糧）</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>菌種優先順序</strong></td>
+                        <td data-label="水梨（果樹）">🥇 菌根菌<br>🥈 木黴菌<br>🥉 枯草桿菌</td>
+                        <td data-label="小黃瓜（果菜）">🥇 木黴菌<br>🥈 枯草桿菌<br>🥉 溶磷菌</td>
+                        <td data-label="玉米（雜糧）">🥇 菌根菌<br>🥈 固氮菌<br>🥉 溶磷菌</td>
+                    </tr>
+                    <tr>
+                        <td><strong>最佳施用時機</strong></td>
+                        <td data-label="水梨（果樹）" class="timing-highlight"><strong>冬末春初萌芽前</strong><br><small>(新根發育前施入根圈)</small></td>
+                        <td data-label="小黃瓜（果菜）" class="timing-highlight"><strong>定植前整地後</strong><br><small>(讓有益菌先行建立族群)</small></td>
+                        <td data-label="玉米（雜糧）" class="timing-highlight"><strong>播種期拌種</strong><br><small>(黃金起點，種子包衣效率高)</small></td>
+                    </tr>
+                    <tr>
+                        <td><strong>連作風險評估</strong></td>
+                        <td data-label="水梨（果樹）"><span class="badge bg-med">中（長期累積）</span><br><small>老梨園易累積自毒分泌物與病原菌</small></td>
+                        <td data-label="小黃瓜（果菜）"><span class="badge bg-high">高（短期爆發）</span><br><small>高頻率連續栽植，極易爆發土傳病害</small></td>
+                        <td data-label="玉米（雜糧）"><span class="badge bg-low">低（輪作可控）</span><br><small>風險相對低，但長期仍有特定病害</small></td>
+                    </tr>
+                    <tr>
+                        <td><strong>耕犁破壞影響</strong></td>
+                        <td data-label="水梨（果樹）"><strong>低</strong><br>多年生免耕環境，微生物生態相對穩定</td>
+                        <td data-label="小黃瓜（果菜）"><strong>高</strong><br>頻繁翻整地嚴重破壞原微生物結構</td>
+                        <td data-label="玉米（雜糧）"><strong>中</strong><br>季節性翻耕，影響中等</td>
+                    </tr>
+                    <tr>
+                        <td><strong>連作預防重點</strong></td>
+                        <td data-label="水梨（果樹）">冬季修剪後配合有機質，同步施用木黴菌與枯草桿菌</td>
+                        <td data-label="小黃瓜（果菜）">拉長休耕期2-3週，深翻並提前施入木黴菌、枯草桿菌真空佔位</td>
+                        <td data-label="玉米（雜糧）">每 2～3 季穿跨一季豆科作物進行輪作</td>
+                    </tr>
+                    <tr>
+                        <td><strong>連作救火重點</strong></td>
+                        <td data-label="水梨（果樹）">改善排水＋大量補施<strong>木黴菌</strong>與<strong>枯草桿菌</strong>壓制病原</td>
+                        <td data-label="小黃瓜（果菜）">低毒性化學殺菌劑控制急性病灶，<strong>間隔兩週後</strong>大量補施木黴菌</td>
+                        <td data-label="玉米（雜糧）"><strong>發病初期拔除病株</strong>，灌根補施木黴菌並嚴格控濕</td>
+                    </tr>
+                    <tr>
+                        <td><strong>耕犁後補菌時機</strong></td>
+                        <td data-label="水梨（果樹）">不適用</td>
+                        <td data-label="小黃瓜（果菜）" class="timing-highlight"><strong>整地後 48 小時黃金窗口內</strong><br>補施孢子型菌劑</td>
+                        <td data-label="玉米（雜糧）"><strong>隨播種局部施用</strong><br>不需全田撒施，省工又精準</td>
+                    </tr>
+                    <tr>
+                        <td><strong>推薦菌劑型態</strong></td>
+                        <td data-label="水梨（果樹）"><strong>固態顆粒劑或粉劑</strong><br>(利於與基肥深層混施)</td>
+                        <td data-label="小黃瓜（果菜）"><strong>孢子型粉劑</strong><br>(耐環境擾動、存活率高)</td>
+                        <td data-label="玉米（雜糧）"><strong>種子包衣或拌種粉劑</strong><br>(發芽第一天即建立共生)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>主要土傳病害</strong></td>
+                        <td data-label="水梨（果樹）" style="color: var(--risk-high);">白紋羽病、褐根病</td>
+                        <td data-label="小黃瓜（果菜）" style="color: var(--risk-high);">萎凋病 (尖鐮孢菌)</td>
+                        <td data-label="玉米（雜糧）" style="color: var(--risk-high);">莖腐病、紋枯病</td>
+                    </tr>
+                    <tr>
+                        <td><strong>主要葉面病害</strong></td>
+                        <td data-label="水梨（果樹）">赤星病、黑星病<br><small>(梅雨季前後為危害高峰)</small></td>
+                        <td data-label="小黃瓜（果菜）">露菌病、白粉病<br><small>(高濕環境蔓延極快)</small></td>
+                        <td data-label="玉米（雜糧）">—</td>
+                    </tr>
+                    <tr>
+                        <td><strong>生物農藥應用重點</strong></td>
+                        <td data-label="水梨（果樹）">
+                            <div class="strategy-block"><span>根部：</span>木黴菌拮抗白紋羽病與褐根病</div>
+                            <div class="strategy-block"><span>葉面：</span>梅雨前用枯草桿菌防赤星病與黑星病</div>
+                        </td>
+                        <td data-label="小黃瓜（果菜）">
+                            <div class="strategy-block"><span>土傳：</span>木黴菌壓制萎凋病</div>
+                            <div class="strategy-block"><span>葉面：</span>木黴菌＋枯草桿菌與化學藥劑交替預防露菌/白粉</div>
+                        </td>
+                        <td data-label="玉米（雜糧）">
+                            <div class="strategy-block"><span>全株：</span>木黴菌預防與減輕莖腐病、紋枯病危害</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 頁尾聯絡與設計師資訊 -->
+        <footer>
+            <div class="footer-designer">🌿 Designed by 農讀阿德</div>
+            <div class="footer-contacts">
+                <div class="footer-contact-item">📞 電話：<a href="tel:0928-596-751">0928-596-751</a></div>
+                <div class="footer-contact-item">✉️ 信箱：<a href="mailto:kid@lyderbio.com">kid@lyderbio.com</a></div>
+                <div class="footer-contact-item">💬 LINE 官方帳號：<a href="https://page.line.me/ghp0573p" target="_blank" class="line-badge">@ghp0573p</a></div>
+            </div>
+        </footer>
+
+    </div>
+
+</body>
+</html>
