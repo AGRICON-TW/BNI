@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>農讀｜植物生長調節劑需求反查表</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --soil: #2d1f0e;
+    --bark: #5c3d1e;
+    --moss: #3a5a2e;
+    --leaf: #5a8a3e;
+    --sprout: #8ab84a;
+    --sun: #e8c84a;
+    --petal: #e8784a;
+    --sky: #c8e8f0;
+    --cream: #f8f2e8;
+    --paper: #faf7f2;
+    --ink: #1a1208;
+    --mist: rgba(255,255,255,0.08);
+  }
+
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* === HEADER === */
+  .hero {
+    background: var(--soil);
+    padding: 3rem 2rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 10% 50%, rgba(90,138,62,0.25) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 90% 20%, rgba(232,200,74,0.12) 0%, transparent 50%);
+  }
+  .hero-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--sprout);
+    border: 1px solid rgba(138,184,74,0.4);
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 1.2rem;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 900;
+    color: var(--cream);
+    line-height: 1.3;
+    margin-bottom: 0.6rem;
+  }
+  .hero h1 span {
+    color: var(--sun);
+  }
+  .hero-sub {
+    font-size: 14px;
+    color: rgba(248,242,232,0.6);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+  }
+
+  /* === FILTER BAR === */
+  .filter-section {
+    background: var(--bark);
+    padding: 1.2rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+  }
+  .filter-inner {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .filter-label {
+    font-size: 11px;
+    color: rgba(248,242,232,0.5);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .filter-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .ftag {
+    font-size: 13px;
+    padding: 6px 16px;
+    border-radius: 100px;
+    border: 1.5px solid rgba(248,242,232,0.2);
+    color: rgba(248,242,232,0.7);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Noto Sans TC', sans-serif;
+    white-space: nowrap;
+  }
+  .ftag:hover {
+    border-color: var(--sprout);
+    color: var(--cream);
+  }
+  .ftag.active {
+    background: var(--sprout);
+    border-color: var(--sprout);
+    color: var(--soil);
+    font-weight: 700;
+  }
+
+  /* === MAIN CONTENT === */
+  .main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 4rem;
+  }
+
+  /* === CARDS GRID === */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    border: 1.5px solid #ede8de;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.3s;
+    box-shadow: 0 2px 8px rgba(45,31,14,0.06);
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(45,31,14,0.12);
+  }
+  .card.hidden {
+    display: none;
+  }
+
+  .card-top {
+    padding: 1.25rem 1.25rem 0.75rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    border-bottom: 1px solid #f0ebe0;
+  }
+  .card-icon {
+    font-size: 2rem;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+  }
+  .card-meta { flex: 1; }
+  .card-need {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.4;
+    margin-bottom: 4px;
+  }
+  .card-hormone-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 9px;
+    border-radius: 100px;
+    letter-spacing: 0.05em;
+  }
+
+  .card-body { padding: 1rem 1.25rem 1.25rem; }
+
+  .card-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+  .card-row-label {
+    font-size: 11px;
+    color: #a09078;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding-top: 2px;
+    min-width: 52px;
+  }
+  .card-row-val {
+    font-size: 13px;
+    color: #3a2a18;
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .products {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 2px;
+  }
+  .product-tag {
+    font-size: 12px;
+    padding: 2px 10px;
+    border-radius: 100px;
+    background: #f5f0e8;
+    color: #5c3d1e;
+    border: 1px solid #ede8de;
+  }
+
+  .card-warning {
+    margin-top: 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: #fff8ee;
+    border-left: 3px solid var(--petal);
+    font-size: 12px;
+    color: #7a4020;
+    line-height: 1.6;
+    display: flex;
+    gap: 6px;
+    align-items: flex-start;
+  }
+  .card-warning::before { content: '⚠️'; font-size: 13px; flex-shrink: 0; }
+
+  /* === COLOR THEMES per hormone === */
+  .theme-auxin   { --hc: #d4882a; --hbg: #fff4e0; --ibg: #fef0d0; }
+  .theme-ck      { --hc: #3a8a5a; --hbg: #e0f4ea; --ibg: #d0f0e0; }
+  .theme-ga      { --hc: #2a7aaa; --hbg: #e0f0fc; --ibg: #d0e8f8; }
+  .theme-ethylene{ --hc: #c04838; --hbg: #fde8e4; --ibg: #fcd8d0; }
+  .theme-aba     { --hc: #7a4aaa; --hbg: #f0e4fc; --ibg: #e8d4f8; }
+  .theme-mixed   { --hc: #5a6a3a; --hbg: #eef2e0; --ibg: #e4eccc; }
+
+  .card-icon { background: var(--ibg); }
+  .card-hormone-tag { background: var(--hbg); color: var(--hc); }
+
+  /* === EMPTY STATE === */
+  .empty {
+    display: none;
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #a09078;
+  }
+  .empty.show { display: block; }
+  .empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .empty p { font-size: 14px; }
+
+  /* === FOOTER NOTE === */
+  .footer-note {
+    margin-top: 3rem;
+    padding: 1.5rem;
+    background: var(--soil);
+    border-radius: 12px;
+    color: rgba(248,242,232,0.7);
+    font-size: 13px;
+    line-height: 1.8;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .footer-note-icon { font-size: 1.4rem; flex-shrink: 0; }
+
+  /* === RESULT COUNT === */
+  .result-count {
+    font-size: 13px;
+    color: #a09078;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .result-count strong { color: var(--moss); }
+
+  @media (max-width: 600px) {
+    .hero { padding: 2rem 1.25rem 2rem; }
+    .filter-section { padding: 1rem 1.25rem; }
+    .main { padding: 1.5rem 1.25rem 3rem; }
+    .cards { grid-template-columns: 1fr; }
+    .ftag { font-size: 12px; padding: 5px 13px; }
+  }
+
+  /* === ANIMATION === */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .card { animation: fadeUp 0.35s ease both; }
+  .card:nth-child(1) { animation-delay: 0.05s; }
+  .card:nth-child(2) { animation-delay: 0.10s; }
+  .card:nth-child(3) { animation-delay: 0.15s; }
+  .card:nth-child(4) { animation-delay: 0.20s; }
+  .card:nth-child(5) { animation-delay: 0.25s; }
+  .card:nth-child(6) { animation-delay: 0.30s; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">農讀 · 植物生長激素系列</div>
+    <h1>植物生長調節劑<br><span>需求反查表</span></h1>
+    <p class="hero-sub">從你的田間需求出發，找到對應的激素與產品</p>
+  </div>
+</header>
+
+<div class="filter-section">
+  <div class="filter-inner">
+    <div class="filter-label">篩選需求類型</div>
+    <div class="filter-tags" id="filterBar">
+      <button class="ftag active" data-filter="all">全部顯示</button>
+      <button class="ftag" data-filter="root">🌱 發根</button>
+      <button class="ftag" data-filter="shoot">🌿 側芽分枝</button>
+      <button class="ftag" data-filter="fruit">🍑 膨果伸長</button>
+      <button class="ftag" data-filter="keep">🛡️ 保果防落</button>
+      <button class="ftag" data-filter="ripen">🍋 催熟採收</button>
+      <button class="ftag" data-filter="color">🍇 著色糖度</button>
+    </div>
+  </div>
+</div>
+
+<main class="main">
+  <div class="result-count" id="resultCount">
+    顯示全部 <strong>6</strong> 項需求
+  </div>
+
+  <div class="cards" id="cardGrid">
+
+    <!-- 1. 促根 -->
+    <div class="card theme-auxin" data-category="root">
+      <div class="card-top">
+        <div class="card-icon">🌱</div>
+        <div class="card-meta">
+          <div class="card-need">促進扦插或移植後發根</div>
+          <span class="card-hormone-tag">生長素類</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-row">
+          <div class="card-row-label">有效成分</div>
+          <div class="card-row-val">吲哚丁酸（IBA）、萘乙酸（NAA）</div>
+        </div>
+        <div class="card-row">
+          <div class="card-row-label">產品關鍵字</div>
+          <div class="card-row-val">
+            <div class="products">
+              <span class="product-tag">促根劑</span>
+              <span class="product-tag">發根素</span>
+              <span class="product-tag">生根粉</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-row">
+          <div class="card-row-label">使用時機</div>
+          <div class="card-row-val">扦插前插穗基部處理，或移植後灌注根部</div>
+        </div>
+        <div class="card-warning">濃度不可過高，高濃度生長素反而抑制發根，處理時間要嚴格控制</div>
+      </div>
+    </div>
+
+    <!-- 2. 側芽分枝 -->
+    <div class="card theme-ck" data-category="shoot">
+      <div class="card-top">
+        <div class="card-icon">🌿</div>
+        <div class="card-meta">
+          <div class="card-need">促進側芽萌發、增加分枝</div>
+          <span class="card-hormone-tag">細胞分裂素類</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-row">
+          <div class="card-row-label">有效成分</div>
+          <div class="card-row-val">細胞分裂素（Cytokinin）、玉米素（Zeatin）、6-BA</div>
+        </div>
+        <div class="card-row">
+          <div class="card-row-label">產品關鍵字</div>
+          <div class="card-row-val">
+            <div class="products">
+              <span class="product-tag">壯芽素</span>
+              <span class="product-tag">分枝劑</span>
+              <span class="product-tag">細胞分裂素</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-row">
+          <div class="card-row-label">使用時機</div>
+          <div class="card-row-val">摘心後配合使用，效果最佳</div>
+        </div>
+        <div class="card-warning">搭配摘心操作效果加乘，單獨使用效果有限；植株需夠健壯再用</div>
+      </div>
+    </div>
+
+    <!-- 3. 膨果 -->
+    <div class="card theme-ga" data-category="fruit">
+      <div class="card-top">
+        <div class="card-icon">🍑</div>
+        <div class="card-meta">
+          <div class="card-need">果實膨大、莖節伸長</div>
+          <span class="card-hormone-tag">勃激素類</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-row">
+          <div class="card-row-label">有效成分</div>
+          <div class="card-row-val">激勃素（GA₃、GA₄₊₇）</div>
+        </div>
+        <div class="card-row">
+          <div class="card-row-label">產品關鍵字</div>
+          <div class="card-row-val">
+            <div class="products">
+              <span class="product-tag">膨大劑</span>
+              <span class="product-tag">激勃素</span>
+              <span class="product-tag">勃激素</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-row">
+          <div class="card-row-label">使用時機</div>
+          <div class="card-row-val">花後果實發育初期施用</div>
+        </div>
+        <div class="card-warning">用量必須精準，過量造成果實徒長、空洞，品質反而下降</div>
+      </div>
+    </div>
+
+    <!-- 4. 保果 -->
+    <div class="card theme-mixed" data-category="keep">
+      <div class="card-top">
+        <div class="card-icon">🛡️</div>
+        <div class="card-meta">
+          <div class="card-need">保果、防止落果落花</div>
+          <span class="card-hormone-tag">細胞分裂素類 / 生長素類</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-row">
+          <div class="card-row-label">有效成分</div>
+          <div class="card-row-val">細胞分裂素類、萘乙酸（低濃度）、4-CPA</div>
+        </div>
+        <div class="card-row">
+          <div class="card-row-label">產品關鍵字</div>
+          <div class="card-row-val">
+            <div class="products">
+              <span class="product-tag">保果素</span>
+              <span class="product-tag">坐果劑</span>
+              <span class="product-tag">防落素</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-row">
+          <div class="card-row-label">使用時機</div>
+          <div class="card-row-val">開花期至坐果期，時機要準確</div>
+        </div>
+        <div class="card-warning">開花期施用時機非常關鍵，太早或太晚效果都差，需配合花的發育狀態</div>
+      </div>
+    </div>
+
+    <!-- 5. 催熟 -->
+    <div class="card theme-ethylene" data-category="ripen">
+      <div class="card-top">
+        <div class="card-icon">🍋</div>
+        <div class="card-meta">
+          <div class="card-need">催熟集中採收</div>
+          <span class="card-hormone-tag">乙烯類</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-row">
+          <div class="card-row-label">有效成分</div>
+          <div class="card-row-val">乙烯利（Ethephon）</div>
+        </div>
+        <div class="card-row">
+          <div class="card-row-label">產品關鍵字</div>
+          <div class="card-row-val">
+            <div class="products">
+              <span class="product-tag">乙烯利</span>
+              <span class="product-tag">催熟劑</span>
+              <span class="product-tag">催色劑</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-row">
+          <div class="card-row-label">使用時機</div>
+          <div class="card-row-val">果實發育完成、接近成熟時施用</div>
+        </div>
+        <div class="card-warning">果實未發育完全時使用會直接導致大量落果；高溫下藥效加速，注意濃度；須注意採收安全間隔期</div>
+      </div>
+    </div>
+
+    <!-- 6. 著色 -->
+    <div class="card theme-aba" data-category="color">
+      <div class="card-top">
+        <div class="card-icon">🍇</div>
+        <div class="card-meta">
+          <div class="card-need">果實著色、提高糖度</div>
+          <span class="card-hormone-tag">離層素類（ABA）</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-row">
+          <div class="card-row-label">有效成分</div>
+          <div class="card-row-val">離層素（S-ABA）</div>
+        </div>
+        <div class="card-row">
+          <div class="card-row-label">產品關鍵字</div>
+          <div class="card-row-val">
+            <div class="products">
+              <span class="product-tag">ABA著色劑</span>
+              <span class="product-tag">離層素</span>
+              <span class="product-tag">葡萄著色劑</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-row">
+          <div class="card-row-label">使用時機</div>
+          <div class="card-row-val">轉色初期施用，不加速果肉老化</div>
+        </div>
+        <div class="card-warning">優於乙烯催色：著色均勻、果粒硬度佳、保鮮期較長；高溫期注意降低施用濃度</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="empty" id="emptyState">
+    <div class="empty-icon">🌾</div>
+    <p>沒有符合的需求項目</p>
+  </div>
+
+  <div class="footer-note">
+    <span class="footer-note-icon">📻</span>
+    <div>
+      <strong style="color:var(--cream)">農讀 · 阿德提醒：</strong>選購前先確認田間需求，對照有效成分，再看使用濃度與時期。調節劑是工具，不是萬靈丹；植株基礎夠健康，工具才能發揮最大效果。
+    </div>
+  </div>
+
+</main>
+
+<script>
+  const filterBar = document.getElementById('filterBar');
+  const cards = document.querySelectorAll('.card');
+  const resultCount = document.getElementById('resultCount');
+  const emptyState = document.getElementById('emptyState');
+
+  filterBar.addEventListener('click', e => {
+    const btn = e.target.closest('.ftag');
+    if (!btn) return;
+
+    document.querySelectorAll('.ftag').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const filter = btn.dataset.filter;
+    let visible = 0;
+
+    cards.forEach(card => {
+      const match = filter === 'all' || card.dataset.category === filter;
+      card.classList.toggle('hidden', !match);
+      if (match) visible++;
+    });
+
+    emptyState.classList.toggle('show', visible === 0);
+
+    if (filter === 'all') {
+      resultCount.innerHTML = `顯示全部 <strong>${visible}</strong> 項需求`;
+    } else {
+      const label = btn.textContent.replace(/^[^\s]+\s/, '');
+      resultCount.innerHTML = `篩選「${label}」：找到 <strong>${visible}</strong> 項`;
+    }
+  });
+</script>
+</body>
+</html>
