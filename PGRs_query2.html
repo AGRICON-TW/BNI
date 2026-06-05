@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>植物激素應用全攻略 - 互動查詢工具</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #2c5e3b; /* 森林綠 */
+            --primary-light: #e8f0eb;
+            --accent-color: #c49a45;  /* 大地金 */
+            --text-dark: #2b3a30;
+            --text-light: #ffffff;
+            --bg-light: #f9fbf9;
+            --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* 頂部橫幅 */
+        header {
+            background: linear-gradient(135deg, #1e4228 0%, #2c5e3b 100%);
+            color: var(--text-light);
+            padding: 3rem 1rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: var(--accent-color);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        /* 主要內容區 */
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* 互動控制面板 */
+        .control-panel {
+            background: #ffffff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 2rem;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8fa895;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 2.8rem;
+            border: 1px solid #d1ded5;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: var(--text-dark);
+            transition: var(--transition);
+            background-color: #fafdfb;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(44, 94, 59, 0.1);
+            background-color: #ffffff;
+        }
+
+        /* 篩選按鈕 */
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .filter-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #556b5c;
+            margin-right: 0.5rem;
+        }
+
+        .tag-btn {
+            background: var(--primary-light);
+            color: var(--primary-color);
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .tag-btn:hover, .tag-btn.active {
+            background: var(--primary-color);
+            color: var(--text-light);
+        }
+
+        /* 卡片式響應式表格 */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .data-card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            border: 1px solid #eef3f0;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .data-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-header {
+            background-color: var(--primary-light);
+            padding: 1.2rem;
+            border-bottom: 1px solid #e2ece6;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-body {
+            padding: 1.2rem;
+            flex-grow: 1;
+        }
+
+        .info-row {
+            margin-bottom: 0.8rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-label {
+            font-size: 0.85rem;
+            color: #7d9685;
+            font-weight: 500;
+            margin-bottom: 0.2rem;
+            text-transform: uppercase;
+        }
+
+        .info-value {
+            font-size: 1rem;
+            color: var(--text-dark);
+        }
+
+        /* 關鍵字標籤樣式 */
+        .keyword-badge {
+            display: inline-block;
+            background-color: #f1f6f2;
+            color: #4a6b53;
+            border: 1px dashed #bcd1c2;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            margin-top: 0.2rem;
+            font-weight: 500;
+        }
+
+        .stage-badge {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.15rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* 無搜尋結果提示 */
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 3rem;
+            color: #7d9685;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .no-results i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* 實用工具連結區 */
+        .tools-section {
+            background: #ffffff;
+            padding: 2rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 3rem;
+            border-top: 4px solid var(--accent-color);
+        }
+
+        .tools-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.2rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .tool-link {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem;
+            background: var(--primary-light);
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .tool-link:hover {
+            background: var(--primary-color);
+            color: var(--text-light);
+            transform: translateX(3px);
+        }
+
+        .tool-link i {
+            font-size: 1.2rem;
+        }
+
+        /* 頁尾 / 聯絡方式 */
+        footer {
+            background-color: #1e4228;
+            color: #d1ded5;
+            padding: 3rem 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .footer-logo h2 {
+            color: var(--text-light);
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-logo p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .footer-contact h4, .footer-links h4 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            position: relative;
+            padding-bottom: 0.3rem;
+        }
+
+        .footer-contact h4::after, .footer-links h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 30px;
+            height: 2px;
+            background: var(--accent-color);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+        }
+
+        .contact-item a {
+            color: #d1ded5;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .contact-item a:hover {
+            color: var(--text-light);
+            text-decoration: underline;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.6rem;
+        }
+
+        .footer-links a {
+            color: #d1ded5;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-light);
+            transform: translateX(3px);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+
+        /* 手機板排版優化 */
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.8rem; }
+            .grid-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>植物生長激素應用全攻略</h1>
+            <p>打破盲點、精準調節，為您的作物找到專屬的黃金配方</p>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <div class="control-panel">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="輸入關鍵字搜尋... (例如：發根、勃激素、膨大劑)">
+            </div>
+            <div class="filter-tags">
+                <span class="filter-label"><i class="fa-solid fa-filter"></i> 生育階段篩選：</span>
+                <button class="tag-btn active" onclick="filterStage('all')">全部</button>
+                <button class="tag-btn" onclick="filterStage('育苗期')">育苗/定植</button>
+                <button class="tag-btn" onclick="filterStage('營養生長')">營養生長</button>
+                <button class="tag-btn" onclick="filterStage('開花期')">開花/幼果</button>
+                <button class="tag-btn" onclick="filterStage('果實')">果實發育/採收</button>
+                <button class="tag-btn" onclick="filterStage('逆境')">逆境/全生育期</button>
+            </div>
+        </div>
+
+        <div class="grid-container" id="cardsGrid">
+            </div>
+
+        <section class="tools-section">
+            <h3><i class="fa-solid fa-calculator"></i> 線上實用計算工具</h3>
+            <div class="tools-grid">
+                <a href="https://agricon-tw.github.io/BNI/fertilizercaculator.html" target="_blank" class="tool-link">
+                    <i class="fa-solid fa-flask"></i> 肥料混合計算器
+                </a>
+                <a href="https://agricon-tw.github.io/BNI/dilutioncaculator.html" target="_blank" class="tool-link">
+                    <i class="fa-solid fa-eye-dropper"></i> 農藥稀釋計算器
+                </a>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h2>永續農業服務</h2>
+                <p>將科學知識轉化為田間產值，與農友並肩作戰的好夥伴。</p>
+            </div>
+            <div class="footer-contact">
+                <h4>聯絡我們</h4>
+                <div class="contact-item">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>電話：<a href="tel:0928596751">0928-596-751</a></span>
+                </div>
+                <div class="contact-item">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>信箱：<a href="mailto:kid@lyderbio.com">kid@lyderbio.com</a></span>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>更多資源</h4>
+                <ul>
+                    <li><a href="https://agprime.pixnet.net/blog" target="_blank"><i class="fa-solid fa-blog"></i> 農業菁英部落格 (AgPrime)</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2026 農業激素應用指南. 保留所有權利。
+        </div>
+    </footer>
+
+    <script>
+        // 從文檔整理出的結構化數據
+        const hormoneData = [
+            { id: 1, need: "促進發根、壯苗", stage: "育苗期、定植後", filterCategory: "育苗期", hormone: "生長素（吲哚丁酸、萘乙酸）", keyword: "發根素、促根劑" },
+            { id: 2, need: "促進側芽、分枝", stage: "修剪後、營養生長期", filterCategory: "營養生長", hormone: "細胞分裂素", keyword: "壯芽素、分枝劑" },
+            { id: 3, need: "加速莖葉伸長", stage: "營養生長旺盛期", filterCategory: "營養生長", hormone: "勃激素（激勃素）", keyword: "膨大劑（莖葉型）" },
+            { id: 4, need: "保花保果、防落果", stage: "開花期、幼果期", filterCategory: "開花期", hormone: "細胞分裂素或生長素類", keyword: "保果素、坐果劑" },
+            { id: 5, need: "果實膨大、增重", stage: "果實發育期", filterCategory: "果實", hormone: "勃激素（激勃素）", keyword: "膨大劑（果實型）" },
+            { id: 6, need: "果實著色、提糖", stage: "採收前3-4週", filterCategory: "果實", hormone: "離層素（ABA）", keyword: "ABA著色劑" },
+            { id: 7, need: "催熟、集中採收", stage: "採收前調控", filterCategory: "果實", hormone: "乙烯（乙烯利）", keyword: "催熟劑" },
+            { id: 8, need: "抗逆境、恢復生機", stage: "高溫、颱風後、逆境期", filterCategory: "逆境", hormone: "細胞分裂素（海藻精）", keyword: "海藻精、抗逆境資材" },
+            { id: 9, need: "提升肥料吸收效率", stage: "全生育期均可", filterCategory: "逆境", hormone: "腐植酸（輔助型）", keyword: "腐植酸、有機酸類" }
+        ];
+
+        let currentStageFilter = 'all';
+
+        // 初始化渲染卡片
+        function renderCards() {
+            const grid = document.getElementById('cardsGrid');
+            const searchVal = document.getElementById('searchInput').value.toLowerCase();
+            grid.innerHTML = '';
+
+            const filteredData = hormoneData.filter(item => {
+                // 搜尋關鍵字比對
+                const matchesSearch = item.need.toLowerCase().includes(searchVal) || 
+                                      item.stage.toLowerCase().includes(searchVal) || 
+                                      item.hormone.toLowerCase().includes(searchVal) || 
+                                      item.keyword.toLowerCase().includes(searchVal);
+                
+                // 生育階段篩選
+                const matchesStage = currentStageFilter === 'all' || item.filterCategory === currentStageFilter;
+                
+                return matchesSearch && matchesStage;
+            });
+
+            if (filteredData.length === 0) {
+                grid.innerHTML = `
+                    <div class="no-results">
+                        <i class="fa-solid fa-seedling"></i>
+                        <p>找不到符合條件的項目，請換個關鍵字試試看！</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filteredData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'data-card';
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fa-solid fa-bullseye" style="color: var(--accent-color);"></i>
+                            ${item.need}
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-row">
+                            <div class="info-label"><i class="fa-solid fa-calendar-days"></i> 適用生育階段</div>
+                            <div class="info-value"><span class="stage-badge">${item.stage}</span></div>
+                        </div>
+                        <div class="info-row" style="margin-top: 0.5rem;">
+                            <div class="info-label"><i class="fa-solid fa-dna"></i> 對應植物激素</div>
+                            <div class="info-value" style="font-weight: 500; color: var(--primary-color);">${item.hormone}</div>
+                        </div>
+                        <div class="info-row" style="margin-top: 0.5rem;">
+                            <div class="info-label"><i class="fa-solid fa-tag"></i> 市售產品關鍵字</div>
+                            <div class="info-value">
+                                <span class="keyword-badge">${item.keyword}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // 階段按鈕切換邏輯
+        function filterStage(stage) {
+            currentStageFilter = stage;
+            
+            // 更新按鈕 active 狀態
+            const buttons = document.querySelectorAll('.tag-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // 找出點擊的按鈕並加上 active
+            event.target.classList.add('active');
+            
+            renderCards();
+        }
+
+        // 綁定搜尋輸入框事件
+        document.getElementById('searchInput').addEventListener('input', renderCards);
+
+        // 首次載入執行
+        window.onload = renderCards;
+    </script>
+</body>
+</html>
