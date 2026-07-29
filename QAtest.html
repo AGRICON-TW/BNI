@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>有機栽培與 ESG 社區菜園營造課程｜前後測問卷</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest:#2C5F2D;
+    --forest-dark:#1F4620;
+    --moss:#97BC62;
+    --moss-light:#EFF4E8;
+    --offwhite:#F7F7F2;
+    --white:#FFFFFF;
+    --dark:#24331F;
+    --muted:#5C6B52;
+    --terra:#C97B4A;
+    --terra-dark:#B5652D;
+    --line:#DCE3D2;
+    --error:#B0413E;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--offwhite);
+    color:var(--dark);
+    font-family:'Noto Sans TC', system-ui, sans-serif;
+    line-height:1.6;
+    padding-bottom:80px;
+  }
+  .hero{
+    background:linear-gradient(160deg, var(--forest) 0%, var(--forest-dark) 100%);
+    color:var(--white);
+    padding:38px 20px 46px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    right:-60px; top:-60px;
+    width:220px; height:220px;
+    border-radius:50%;
+    background:rgba(151,188,98,0.25);
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    right:40px; bottom:-90px;
+    width:180px; height:180px;
+    border-radius:50%;
+    background:rgba(151,188,98,0.18);
+  }
+  .hero-inner{ max-width:720px; margin:0 auto; position:relative; z-index:1; }
+  .eyebrow{
+    font-size:13px; letter-spacing:2px; color:var(--moss);
+    font-weight:700; margin-bottom:10px; text-transform:uppercase;
+  }
+  h1.title{
+    font-family:'Noto Serif TC', serif;
+    font-size:clamp(28px,6vw,38px);
+    font-weight:900;
+    margin:0 0 8px;
+  }
+  .hero p.sub{ margin:0; color:#E7EEDD; font-size:15px; }
+
+  .wrap{ max-width:720px; margin:-26px auto 0; padding:0 16px; }
+
+  .card{
+    background:var(--white);
+    border-radius:16px;
+    box-shadow:0 8px 24px rgba(44,95,45,0.08);
+    padding:22px 20px;
+    margin-bottom:18px;
+  }
+
+  /* mode tabs */
+  .mode-tabs{
+    display:flex; gap:10px; background:var(--moss-light);
+    border-radius:14px; padding:6px; margin-bottom:18px;
+  }
+  .mode-tab{
+    flex:1; text-align:center; padding:13px 8px;
+    border-radius:10px; font-weight:700; font-size:16px;
+    cursor:pointer; user-select:none; color:var(--muted);
+    transition:all .15s ease;
+    border:2px solid transparent;
+  }
+  .mode-tab.active{
+    background:var(--forest); color:var(--white);
+    box-shadow:0 4px 10px rgba(44,95,45,0.25);
+  }
+
+  .field-label{
+    font-weight:700; font-size:15px; margin-bottom:8px; display:block; color:var(--dark);
+  }
+  .field-row{ margin-bottom:16px; }
+  select, input[type=text]{
+    width:100%; font-size:16px; padding:12px 14px;
+    border:2px solid var(--line); border-radius:10px;
+    font-family:inherit; background:var(--white); color:var(--dark);
+  }
+  select:focus, input[type=text]:focus{ outline:none; border-color:var(--forest); }
+
+  .pill-group{ display:flex; gap:10px; flex-wrap:wrap; }
+  .pill{
+    flex:1; min-width:110px; text-align:center; padding:12px 10px;
+    border:2px solid var(--line); border-radius:10px; cursor:pointer;
+    font-size:15px; font-weight:500; transition:all .15s ease;
+  }
+  .pill.selected{
+    border-color:var(--forest); background:var(--moss-light); color:var(--forest); font-weight:700;
+  }
+
+  .progress-wrap{
+    position:sticky; top:0; z-index:20; background:var(--offwhite);
+    padding:12px 16px 8px; max-width:720px; margin:0 auto;
+  }
+  .progress-track{
+    height:8px; background:var(--line); border-radius:6px; overflow:hidden;
+  }
+  .progress-fill{
+    height:100%; background:var(--forest); width:0%; transition:width .25s ease;
+  }
+  .progress-label{ font-size:12.5px; color:var(--muted); margin-top:6px; text-align:right; }
+
+  .section-title{
+    font-family:'Noto Serif TC', serif;
+    font-size:20px; font-weight:700; color:var(--forest);
+    margin:6px 0 4px; padding-bottom:10px;
+    border-bottom:2px solid var(--moss-light);
+  }
+  .section-sub{ font-size:13px; color:var(--muted); margin-bottom:14px; }
+
+  .question{ margin-bottom:22px; }
+  .question:last-child{ margin-bottom:4px; }
+  .q-text{ font-weight:700; font-size:16px; margin-bottom:10px; }
+  .q-num{ color:var(--terra-dark); margin-right:4px; }
+
+  .option{
+    display:flex; align-items:center; gap:12px;
+    padding:12px 14px; border:2px solid var(--line); border-radius:10px;
+    margin-bottom:8px; cursor:pointer; transition:all .12s ease;
+  }
+  .option:hover{ border-color:var(--moss); }
+  .option.selected{
+    border-color:var(--forest); background:var(--moss-light);
+  }
+  .option input[type=radio]{
+    width:20px; height:20px; accent-color:var(--forest); flex-shrink:0;
+  }
+  .option-text{ font-size:15px; }
+
+  .question.missing .q-text{ color:var(--error); }
+  .question.missing .option{ border-color:var(--error); }
+
+  .btn{
+    display:inline-block; width:100%; text-align:center;
+    padding:16px; border-radius:12px; font-size:17px; font-weight:700;
+    border:none; cursor:pointer; font-family:inherit;
+  }
+  .btn-primary{ background:var(--forest); color:var(--white); }
+  .btn-primary:active{ background:var(--forest-dark); }
+  .btn-secondary{
+    background:var(--white); color:var(--forest); border:2px solid var(--forest);
+  }
+  .btn:disabled{ opacity:.5; cursor:not-allowed; }
+
+  .hint{ font-size:13px; color:var(--muted); text-align:center; margin-top:10px; }
+
+  /* result screen */
+  .result-hero{
+    text-align:center; padding:10px 6px 4px;
+  }
+  .result-icon{
+    width:70px; height:70px; border-radius:50%; background:var(--moss-light);
+    display:flex; align-items:center; justify-content:center; margin:0 auto 14px;
+    font-size:34px;
+  }
+  .result-title{
+    font-family:'Noto Serif TC', serif; font-size:24px; font-weight:900; color:var(--forest); margin:0 0 8px;
+  }
+  .result-sub{ color:var(--muted); font-size:14.5px; margin-bottom:18px; }
+
+  textarea.email-preview{
+    width:100%; min-height:220px; font-family:ui-monospace, monospace; font-size:13px;
+    padding:12px; border-radius:10px; border:2px solid var(--line); color:var(--dark);
+    background:var(--offwhite); resize:vertical;
+  }
+  .copy-note{ font-size:12.5px; color:var(--muted); margin-top:8px; }
+  .copied-flag{ color:var(--forest); font-weight:700; }
+
+  .hidden{ display:none !important; }
+
+  .footer-note{
+    text-align:center; font-size:12px; color:var(--muted); margin-top:22px; padding:0 20px;
+  }
+
+  @media (max-width:420px){
+    .pill{ min-width:90px; font-size:14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">有機栽培與 ESG 社區菜園營造課程</div>
+    <h1 class="title" id="pageTitle">前測問卷</h1>
+    <p class="sub" id="pageSub">課程開始前，請先填寫這份問卷，沒有標準答案的壓力，依照目前所知作答即可。</p>
+  </div>
+</div>
+
+<div id="setupBanner" class="hidden" style="max-width:720px;margin:14px auto 0;padding:0 16px;">
+  <div style="background:#FCEFE3;border:2px solid var(--terra);border-radius:12px;padding:14px 16px;font-size:13.5px;color:var(--terra-dark);">
+    ⚠️ <strong>管理者設定提醒：</strong>尚未連接 Formspree 表單，目前無法靜默送出結果。請開啟本檔案，搜尋 <code>YOUR_FORM_ID</code>，換成您自己的 Formspree 表單網址後即可正常運作。
+  </div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-label" id="progressLabel">0 / 12 題已作答</div>
+</div>
+
+<div class="wrap">
+
+  <div class="card" id="formCard">
+    <div class="mode-tabs">
+      <div class="mode-tab active" data-mode="前測" id="tabPre">前測</div>
+      <div class="mode-tab" data-mode="後測" id="tabPost">後測</div>
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">組別</label>
+      <select id="groupSelect">
+        <option value="">請選擇組別</option>
+        <option>第 1 組</option>
+        <option>第 2 組</option>
+        <option>第 3 組</option>
+        <option>第 4 組</option>
+        <option>第 5 組</option>
+      </select>
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">代號／暱稱</label>
+      <input type="text" id="nameInput" placeholder="例如：小美、王阿伯（不需填真實全名）" />
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">身份別</label>
+      <div class="pill-group" id="rolePillGroup">
+        <div class="pill" data-value="兒少">兒少</div>
+        <div class="pill" data-value="長輩">長輩</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">第一部分：SDGs 永續發展目標認知</div>
+    <div class="section-sub">回想單元一學到的內容</div>
+    <div id="section1"></div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">第二部分：有機栽培知識</div>
+    <div class="section-sub">回想單元二學到的內容</div>
+    <div id="section2"></div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">第三部分：社區菜園規劃概念（ESG）</div>
+    <div class="section-sub">回想單元三學到的內容</div>
+    <div id="section3"></div>
+  </div>
+
+  <button class="btn btn-primary" id="submitBtn">送出問卷結果</button>
+  <div class="hint" id="validationHint"></div>
+
+  <!-- Submitting state -->
+  <div class="card hidden" id="sendingCard">
+    <div class="result-hero">
+      <div class="result-icon">⏳</div>
+      <div class="result-title">送出中…</div>
+      <div class="result-sub">正在自動送出問卷結果，請稍候，不需要做任何操作。</div>
+    </div>
+  </div>
+
+  <!-- Result screen: success -->
+  <div class="card hidden" id="resultCard">
+    <div class="result-hero">
+      <div class="result-icon">✅</div>
+      <div class="result-title">已自動送出，感謝完成！</div>
+      <div class="result-sub">問卷結果已靜默送出至指定信箱，您不需要再做任何操作。</div>
+    </div>
+    <button class="btn btn-secondary" id="restartBtn">再填一份（例如換填後測）</button>
+  </div>
+
+  <!-- Result screen: error / fallback -->
+  <div class="card hidden" id="errorCard">
+    <div class="result-hero">
+      <div class="result-icon">⚠️</div>
+      <div class="result-title">自動送出失敗</div>
+      <div class="result-sub" id="errorSub">可能是網路問題，請按下方按鈕重試，或使用備用方式。</div>
+    </div>
+    <button class="btn btn-primary" id="retryBtn">重新送出</button>
+    <div style="height:10px"></div>
+    <button class="btn btn-secondary" id="openMailBtn">改用郵件程式寄出（備用）</button>
+    <div style="height:10px"></div>
+    <button class="btn btn-secondary" id="copyBtn">複製結果內容（備用）</button>
+    <div class="copy-note" id="copyNote">可貼到郵件、Line 或訊息中手動傳送給老師。</div>
+    <textarea class="email-preview" id="emailPreview" readonly></textarea>
+  </div>
+
+</div>
+
+<div class="footer-note">問卷結果將自動送出　．　資料僅用於課程成效評估</div>
+
+<script>
+const RECIPIENT = "f7493108@gmail.com";
+
+// ====== Formspree 設定：請將下方換成您自己的 Formspree 表單網址 ======
+// 1. 到 https://formspree.io 免費註冊帳號（用 f7493108@gmail.com 註冊或設為收件信箱）
+// 2. 建立一個新表單（New Form），命名例如「社區菜園課程問卷」
+// 3. 複製表單的 Endpoint 網址，格式類似：https://formspree.io/f/xxxxabcd
+// 4. 貼到下面雙引號中取代 YOUR_FORM_ID
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
+const FORMSPREE_CONFIGURED = !FORMSPREE_ENDPOINT.includes("YOUR_FORM_ID");
+
+const questions = [
+  { section: "SDGs 永續發展目標認知", key:"sdg", items: [
+    { q: "SDGs 是由哪個國際組織於西元 2015 年提出的全球共同目標？",
+      options: [["A","世界衛生組織（WHO）"],["B","聯合國（UN）"],["C","世界貿易組織（WTO）"]], answer:"B" },
+    { q: "SDGs 總共包含幾項全球共同目標？",
+      options: [["A","10 項"],["B","17 項"],["C","25 項"]], answer:"B" },
+    { q: "「把廚餘做成堆肥、減少資源浪費」，最符合下列哪一項 SDG 目標？",
+      options: [["A","SDG2 消除飢餓"],["B","SDG12 責任消費與生產"],["C","SDG15 陸域生態"]], answer:"B" },
+    { q: "社區自己種菜、減少依賴外地運來的食物，最直接呼應下列哪一項 SDG 目標？",
+      options: [["A","SDG2 消除飢餓"],["B","SDG3 健康與福祉"],["C","SDG11 永續城鄉"]], answer:"A" },
+  ]},
+  { section: "有機栽培知識", key:"organic", items: [
+    { q: "關於有機栽培的核心精神，下列敘述何者「錯誤」？",
+      options: [["A","不使用化學合成農藥與肥料"],["B","目標是消滅菜園裡所有的蟲，讓菜園完全無蟲"],["C","重視土壤健康與生態平衡"]], answer:"B" },
+    { q: "在番茄旁邊種九層塔，讓兩種作物互相幫忙，這是利用下列哪一種栽培方式？",
+      options: [["A","輪作"],["B","混植（同伴種植）"],["C","單一栽培"]], answer:"B" },
+    { q: "下列哪一種植物，最常被用來驅趕土壤中的線蟲、並吸引蜜蜂蝴蝶協助授粉？",
+      options: [["A","萬壽菊"],["B","玫瑰"],["C","松樹"]], answer:"A" },
+    { q: "製作堆肥時，關於「乾料」與「濕料」的比例，下列敘述何者正確？",
+      options: [["A","全部使用濕的廚餘，效果最好"],["B","乾濕要適當混合，太濕易發臭、太乾不易分解"],["C","乾濕比例完全不影響堆肥效果"]], answer:"B" },
+  ]},
+  { section: "社區菜園規劃概念（ESG）", key:"esg", items: [
+    { q: "ESG 社區菜園中的「E」，代表下列何者？",
+      options: [["A","環境（Environment）"],["B","教育（Education）"],["C","經濟（Economy）"]], answer:"A" },
+    { q: "規劃「休憩區」、鼓勵長輩與兒少一起參與、互相照顧，主要呼應 ESG 中的哪一個面向？",
+      options: [["A","環境"],["B","社會"],["C","治理"]], answer:"B" },
+    { q: "「誰負責澆水、誰負責記錄、固定時間巡園維護」這樣的安排，屬於 ESG 中的哪一個面向？",
+      options: [["A","環境"],["B","社會"],["C","治理"]], answer:"C" },
+    { q: "規劃菜園的「種植區配置」時，下列何者是主要考慮因素？",
+      options: [["A","日照方向與水源位置"],["B","菜園主人最喜歡的顏色"],["C","隔壁鄰居家的裝潢風格"]], answer:"A" },
+  ]},
+];
+
+// flatten with global numbering
+let globalIndex = 0;
+const flatQuestions = [];
+questions.forEach(sec => {
+  sec.items.forEach(it => {
+    globalIndex++;
+    flatQuestions.push({ ...it, num: globalIndex, sectionKey: sec.key, sectionName: sec.section });
+  });
+});
+
+const sectionContainers = { sdg: document.getElementById("section1"), organic: document.getElementById("section2"), esg: document.getElementById("section3") };
+
+const state = { mode: "前測", group:"", name:"", role:"", answers:{} };
+
+function renderQuestions(){
+  questions.forEach(sec => {
+    const container = sectionContainers[sec.key];
+    container.innerHTML = "";
+    sec.items.forEach(it => {
+      const flat = flatQuestions.find(f => f.q === it.q);
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+      qDiv.id = "q" + flat.num;
+
+      const qText = document.createElement("div");
+      qText.className = "q-text";
+      qText.innerHTML = `<span class="q-num">${flat.num}.</span>${it.q}`;
+      qDiv.appendChild(qText);
+
+      it.options.forEach(([letter, text]) => {
+        const opt = document.createElement("label");
+        opt.className = "option";
+        opt.innerHTML = `
+          <input type="radio" name="q${flat.num}" value="${letter}" />
+          <span class="option-text">${letter}、${text}</span>
+        `;
+        opt.addEventListener("click", () => selectAnswer(flat.num, letter, qDiv, opt));
+        qDiv.appendChild(opt);
+      });
+
+      container.appendChild(qDiv);
+    });
+  });
+}
+
+function selectAnswer(num, letter, qDiv, optEl){
+  state.answers[num] = letter;
+  qDiv.classList.remove("missing");
+  [...qDiv.querySelectorAll(".option")].forEach(o => o.classList.remove("selected"));
+  optEl.classList.add("selected");
+  updateProgress();
+}
+
+function updateProgress(){
+  const answered = Object.keys(state.answers).length;
+  const total = flatQuestions.length;
+  document.getElementById("progressFill").style.width = (answered/total*100) + "%";
+  document.getElementById("progressLabel").textContent = `${answered} / ${total} 題已作答`;
+}
+
+// mode tabs
+function setMode(mode){
+  state.mode = mode;
+  document.getElementById("tabPre").classList.toggle("active", mode==="前測");
+  document.getElementById("tabPost").classList.toggle("active", mode==="後測");
+  document.getElementById("pageTitle").textContent = mode + "問卷";
+  document.getElementById("pageSub").textContent = mode==="前測"
+    ? "課程開始前，請先填寫這份問卷，沒有標準答案的壓力，依照目前所知作答即可。"
+    : "課程結束後，請再次填寫這份問卷，看看今天學到了多少！";
+}
+document.getElementById("tabPre").addEventListener("click", () => setMode("前測"));
+document.getElementById("tabPost").addEventListener("click", () => setMode("後測"));
+
+// role pills
+document.querySelectorAll("#rolePillGroup .pill").forEach(p => {
+  p.addEventListener("click", () => {
+    document.querySelectorAll("#rolePillGroup .pill").forEach(x => x.classList.remove("selected"));
+    p.classList.add("selected");
+    state.role = p.dataset.value;
+  });
+});
+
+function buildEmailBody(){
+  const now = new Date();
+  const dateStr = now.toLocaleDateString("zh-TW") + " " + now.toLocaleTimeString("zh-TW", {hour:'2-digit', minute:'2-digit'});
+
+  let correctCount = 0;
+  const sectionScore = { sdg:{c:0,t:0}, organic:{c:0,t:0}, esg:{c:0,t:0} };
+  const lines = [];
+  flatQuestions.forEach(f => {
+    const chosen = state.answers[f.num] || "（未作答）";
+    const isCorrect = chosen === f.answer;
+    if (isCorrect) correctCount++;
+    sectionScore[f.sectionKey].t++;
+    if (isCorrect) sectionScore[f.sectionKey].c++;
+    lines.push(`${f.num}. 作答：${chosen}　正確答案：${f.answer}　${isCorrect ? "✓" : "✗"}`);
+  });
+
+  const total = flatQuestions.length;
+  const body = [
+    `【${state.mode}問卷結果】有機栽培與 ESG 社區菜園營造課程`,
+    `填寫時間：${dateStr}`,
+    `組別：${state.group || "（未填）"}`,
+    `代號／暱稱：${state.name || "（未填）"}`,
+    `身份別：${state.role || "（未填）"}`,
+    ``,
+    `總分：${correctCount} / ${total}（${Math.round(correctCount/total*100)}%）`,
+    `　SDGs 永續發展目標認知：${sectionScore.sdg.c} / ${sectionScore.sdg.t}`,
+    `　有機栽培知識：${sectionScore.organic.c} / ${sectionScore.organic.t}`,
+    `　社區菜園規劃概念（ESG）：${sectionScore.esg.c} / ${sectionScore.esg.t}`,
+    ``,
+    `作答明細：`,
+    ...lines,
+  ].join("\n");
+
+  return { body, correctCount, total };
+}
+
+let lastPayload = null;
+
+function validateAndBuild(){
+  let firstMissing = null;
+  flatQuestions.forEach(f => {
+    const qDiv = document.getElementById("q"+f.num);
+    if (!state.answers[f.num]){
+      qDiv.classList.add("missing");
+      if (!firstMissing) firstMissing = qDiv;
+    } else {
+      qDiv.classList.remove("missing");
+    }
+  });
+
+  const hint = document.getElementById("validationHint");
+  if (!state.group){
+    hint.textContent = "請先選擇組別";
+    document.getElementById("groupSelect").scrollIntoView({behavior:"smooth", block:"center"});
+    return null;
+  }
+  if (!state.role){
+    hint.textContent = "請先選擇身份別";
+    document.getElementById("rolePillGroup").scrollIntoView({behavior:"smooth", block:"center"});
+    return null;
+  }
+  if (firstMissing){
+    hint.textContent = "還有題目尚未作答，請完成所有題目再送出";
+    firstMissing.scrollIntoView({behavior:"smooth", block:"center"});
+    return null;
+  }
+  hint.textContent = "";
+  state.name = document.getElementById("nameInput").value.trim();
+
+  const { body, correctCount, total } = buildEmailBody();
+  const subject = `${state.mode}問卷結果｜${state.group}｜${state.name || "未填代號"}`;
+
+  return { body, subject, correctCount, total };
+}
+
+async function sendToFormspree(payload){
+  const res = await fetch(FORMSPREE_ENDPOINT, {
+    method: "POST",
+    headers: { "Accept": "application/json", "Content-Type": "application/json" },
+    body: JSON.stringify({
+      _subject: payload.subject,
+      mode: state.mode,
+      group: state.group,
+      name: state.name,
+      role: state.role,
+      score: `${payload.correctCount} / ${payload.total}`,
+      message: payload.body,
+    }),
+  });
+  if (!res.ok) throw new Error("Formspree responded with " + res.status);
+  return res;
+}
+
+function showCard(id){
+  ["sendingCard","resultCard","errorCard"].forEach(c => document.getElementById(c).classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+  document.getElementById(id).scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+async function doSubmit(){
+  const payload = validateAndBuild();
+  if (!payload) return;
+  lastPayload = payload;
+
+  document.getElementById("emailPreview").value = `收件者：${RECIPIENT}\n主旨：${payload.subject}\n\n${payload.body}`;
+  document.getElementById("submitBtn").disabled = true;
+  showCard("sendingCard");
+
+  if (!FORMSPREE_CONFIGURED){
+    document.getElementById("errorSub").textContent =
+      "尚未設定 Formspree 表單網址，請聯繫課程管理者完成設定（見程式碼中的說明），暫時可用下方備用方式送出。";
+    showCard("errorCard");
+    return;
+  }
+
+  try{
+    await sendToFormspree(payload);
+    showCard("resultCard");
+  }catch(err){
+    document.getElementById("errorSub").textContent = "可能是網路問題，請按下方按鈕重試，或使用備用方式。";
+    showCard("errorCard");
+  }
+}
+
+document.getElementById("submitBtn").addEventListener("click", doSubmit);
+document.getElementById("retryBtn").addEventListener("click", () => {
+  if (lastPayload) { showCard("sendingCard"); sendToFormspree(lastPayload).then(()=>showCard("resultCard")).catch(()=>showCard("errorCard")); }
+});
+
+document.getElementById("openMailBtn").addEventListener("click", () => {
+  if (!lastPayload) return;
+  const mailto = `mailto:${RECIPIENT}?subject=${encodeURIComponent(lastPayload.subject)}&body=${encodeURIComponent(lastPayload.body)}`;
+  window.location.href = mailto;
+});
+
+document.getElementById("copyBtn").addEventListener("click", async () => {
+  const text = document.getElementById("emailPreview").value;
+  const note = document.getElementById("copyNote");
+  try{
+    await navigator.clipboard.writeText(text);
+    note.innerHTML = `<span class="copied-flag">已複製到剪貼簿！</span> 請貼到郵件中寄給 ${RECIPIENT}`;
+  }catch(e){
+    const ta = document.getElementById("emailPreview");
+    ta.select();
+    document.execCommand("copy");
+    note.innerHTML = `<span class="copied-flag">已複製到剪貼簿！</span> 請貼到郵件中寄給 ${RECIPIENT}`;
+  }
+});
+
+document.getElementById("restartBtn").addEventListener("click", () => {
+  state.answers = {};
+  state.group = ""; state.name = ""; state.role = "";
+  document.getElementById("groupSelect").value = "";
+  document.getElementById("nameInput").value = "";
+  document.querySelectorAll("#rolePillGroup .pill").forEach(x => x.classList.remove("selected"));
+  renderQuestions();
+  updateProgress();
+  showCard("resultCard"); // will be hidden below
+  document.getElementById("resultCard").classList.add("hidden");
+  document.getElementById("errorCard").classList.add("hidden");
+  document.getElementById("sendingCard").classList.add("hidden");
+  document.getElementById("submitBtn").disabled = false;
+  document.getElementById("validationHint").textContent = "";
+  window.scrollTo({top:0, behavior:"smooth"});
+  setMode(state.mode === "前測" ? "後測" : "前測");
+});
+
+document.getElementById("groupSelect").addEventListener("change", (e) => { state.group = e.target.value; });
+
+renderQuestions();
+updateProgress();
+if (!FORMSPREE_CONFIGURED){
+  document.getElementById("setupBanner").classList.remove("hidden");
+}
+</script>
+
+</body>
+</html>
