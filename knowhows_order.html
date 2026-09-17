@@ -7,15 +7,14 @@
 <meta name="description" content="佑辰有限公司農好事系列友善農作資材，包含新光合發、百發酵素、蓋澎湃、益菌寶、耐候王、蒜辣皂精、美綠速，助您突破氣候逆境、減藥增產。">
 <style>
   :root {
-    /* 佑辰 VI 規範色彩 */
     --vi-primary-green: #11572d;   /* C90 M50 Y100 K0 佑辰深綠 */
     --vi-accent-green: #48a13a;    /* C70 M20 Y100 K0 活力綠 */
-    --vi-light-bg: #f5f8f3;        /* 柔和大自然底色 */
+    --vi-light-bg: #f5f8f3;
     --vi-card-bg: #ffffff;
     --vi-text-main: #1f2921;
     --vi-text-muted: #536456;
     --vi-border: #d4e0d2;
-    --vi-highlight: #d97706;       /* 價格琥珀金 */
+    --vi-highlight: #d97706;
     --vi-highlight-bg: #fffbeb;
   }
 
@@ -25,16 +24,15 @@
     background-color: var(--vi-light-bg);
     color: var(--vi-text-main);
     line-height: 1.6;
-    padding-bottom: 110px; /* 留出底部結帳 Bar 空間 */
+    padding-bottom: 120px;
   }
 
-  /* 頂部 Hero 品牌區 */
+  /* 頂部品牌 Header */
   header {
     background: linear-gradient(135deg, #0d4021 0%, var(--vi-primary-green) 100%);
     color: #ffffff;
-    padding: 3rem 1.5rem 2.5rem;
+    padding: 2.8rem 1.5rem 2.2rem;
     text-align: center;
-    position: relative;
     box-shadow: 0 4px 15px rgba(17,87,45,0.15);
   }
   .brand-badge {
@@ -47,14 +45,13 @@
     border-radius: 30px;
     font-size: 0.85rem;
     letter-spacing: 1.5px;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
     text-transform: uppercase;
   }
   header h1 {
     font-size: 2.2rem;
     font-weight: 800;
-    letter-spacing: 1px;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.5rem;
   }
   header .subtitle {
     font-size: 1.05rem;
@@ -64,7 +61,6 @@
     font-weight: 300;
   }
 
-  /* 核心理念條 */
   .concept-strip {
     background: #ffffff;
     border-bottom: 1px solid var(--vi-border);
@@ -75,23 +71,25 @@
   }
   .concept-strip strong { color: var(--vi-primary-green); }
 
-  /* 主容器 */
   .main-container {
     max-width: 1120px;
     margin: 2rem auto;
     padding: 0 1.25rem;
   }
 
+  /* 區塊標題 */
   .section-header {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     justify-content: space-between;
-    margin: 2.5rem 0 1.2rem;
+    margin: 2rem 0 1.2rem;
     border-bottom: 2px solid var(--vi-border);
     padding-bottom: 0.6rem;
+    flex-wrap: wrap;
+    gap: 8px;
   }
   .section-title {
-    font-size: 1.45rem;
+    font-size: 1.4rem;
     font-weight: 800;
     color: var(--vi-primary-green);
     display: flex;
@@ -150,12 +148,10 @@
   .p-mechanism {
     font-size: 0.88rem;
     color: var(--vi-text-main);
-    line-height: 1.5;
+    line-height: 1.55;
     margin-bottom: 0.8rem;
   }
-  .p-mechanism strong {
-    color: #0b3d1f;
-  }
+  .p-mechanism strong { color: #0b3d1f; }
   .p-usage {
     background: #fbfdfa;
     border-left: 3px solid var(--vi-accent-green);
@@ -224,15 +220,38 @@
     color: #1f2937;
   }
 
-  /* 訂購人資料表單 */
+  /* 訂購人表單與運費即時計算明細 */
   .order-section {
     background: var(--vi-card-bg);
     border-radius: 12px;
     border: 1px solid var(--vi-border);
     padding: 2rem;
-    margin-top: 2rem;
+    margin-top: 2.5rem;
     box-shadow: 0 4px 16px rgba(0,0,0,0.03);
   }
+  .shipping-banner {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: #166534;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .shipping-status-tag {
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+  }
+  .status-free { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+  .status-fee { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+
   .form-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -260,17 +279,33 @@
     border-color: var(--vi-accent-green);
     background-color: #ffffff;
   }
-  .form-tips {
-    font-size: 0.82rem;
-    color: #64748b;
-    margin-top: 1rem;
-    line-height: 1.5;
-    background: #f8fafc;
-    padding: 10px 12px;
-    border-radius: 6px;
+
+  /* 訂購單下方試算清單 */
+  .order-calc-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+  }
+  .order-calc-table td {
+    padding: 8px 12px;
+    border-top: 1px solid #e2e8f0;
+  }
+  .calc-label { text-align: right; color: var(--vi-text-muted); width: 70%; }
+  .calc-val { text-align: right; font-weight: 700; width: 30%; color: var(--vi-text-main); }
+  .calc-total td {
+    border-top: 2px solid var(--vi-primary-green);
+    font-size: 1.15rem;
+    color: var(--vi-primary-green);
+    padding-top: 12px;
+  }
+  .calc-total .calc-val {
+    color: var(--vi-highlight);
+    font-size: 1.35rem;
+    font-weight: 800;
   }
 
-  /* 底部固定總計結帳列 */
+  /* 底部固定結帳列 */
   .floating-footer {
     position: fixed;
     bottom: 0;
@@ -279,7 +314,7 @@
     background: rgba(255, 255, 255, 0.96);
     backdrop-filter: blur(10px);
     border-top: 1px solid var(--vi-border);
-    padding: 14px 1.5rem;
+    padding: 12px 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -288,35 +323,41 @@
   }
   .summary-info {
     display: flex;
-    align-items: baseline;
-    gap: 12px;
+    flex-direction: column;
+    gap: 2px;
   }
-  .total-count-tag {
-    font-size: 0.9rem;
+  .summary-line-1 {
+    font-size: 0.82rem;
     color: var(--vi-text-muted);
+    display: flex;
+    gap: 10px;
+    align-items: center;
   }
-  .total-price-wrap {
-    font-size: 1.05rem;
+  .summary-line-2 {
+    font-size: 1rem;
     font-weight: 700;
     color: var(--vi-primary-green);
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
   }
   .total-price {
-    font-size: 1.7rem;
+    font-size: 1.6rem;
     font-weight: 800;
     color: var(--vi-highlight);
-    margin-left: 4px;
   }
   .btn-submit-order {
     background: var(--vi-primary-green);
     color: #ffffff;
     border: none;
-    padding: 12px 32px;
+    padding: 12px 30px;
     font-size: 1.05rem;
     font-weight: 700;
     border-radius: 8px;
     cursor: pointer;
     transition: background 0.2s, transform 0.1s;
     letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(17,87,45,0.25);
   }
   .btn-submit-order:hover {
     background: var(--vi-accent-green);
@@ -325,7 +366,100 @@
     transform: scale(0.98);
   }
 
-  /* 頁尾官方品牌資訊 */
+  /* 訂單成功確認彈窗 (Modal) */
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.65);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .modal-backdrop.active { display: flex; }
+  .modal-card {
+    background: #ffffff;
+    border-radius: 14px;
+    max-width: 650px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    animation: modalPop 0.25s ease-out;
+  }
+  @keyframes modalPop {
+    from { opacity: 0; transform: scale(0.92); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .modal-header {
+    background: var(--vi-primary-green);
+    color: #ffffff;
+    padding: 1.4rem;
+    text-align: center;
+    position: relative;
+  }
+  .modal-header h3 { font-size: 1.35rem; font-weight: 800; }
+  .modal-header p { font-size: 0.85rem; color: #d1ebd4; margin-top: 4px; }
+  .modal-body {
+    padding: 1.5rem;
+  }
+  .order-meta-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 1.2rem;
+    font-size: 0.86rem;
+    line-height: 1.6;
+  }
+  .order-meta-box strong { color: var(--vi-primary-green); }
+  .modal-items-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    margin-bottom: 1.2rem;
+  }
+  .modal-items-table th {
+    background: #f1f5f9;
+    padding: 8px;
+    text-align: left;
+    font-weight: 600;
+  }
+  .modal-items-table td {
+    padding: 8px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .modal-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 1.5rem;
+  }
+  .btn-action {
+    padding: 11px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    border: none;
+    transition: opacity 0.2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .btn-line { background: #06c755; color: #ffffff; }
+  .btn-email { background: #2563eb; color: #ffffff; }
+  .btn-print { background: #475569; color: #ffffff; }
+  .btn-close { background: #e2e8f0; color: #1e293b; grid-column: span 2; }
+  .btn-action:hover { opacity: 0.9; }
+
   footer {
     max-width: 1120px;
     margin: 3rem auto 1rem;
@@ -336,27 +470,19 @@
     line-height: 1.6;
     text-align: center;
   }
-  .footer-links {
-    margin-top: 0.5rem;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    font-size: 0.85rem;
-  }
-  .footer-links a { color: var(--vi-primary-green); text-decoration: none; }
-  .footer-links a:hover { text-decoration: underline; }
 
   @media (max-width: 768px) {
     header h1 { font-size: 1.8rem; }
     .floating-footer { flex-direction: column; gap: 10px; padding: 10px 1rem; }
     .btn-submit-order { width: 100%; }
-    .summary-info { width: 100%; justify-content: space-between; }
+    .summary-info { width: 100%; align-items: center; }
+    .modal-actions { grid-template-columns: 1fr; }
+    .btn-close { grid-column: span 1; }
   }
 </style>
 </head>
 <body>
 
-<!-- 頂部 Hero 品牌區 -->
 <header>
   <div class="brand-badge">AGPRIME 佑辰綠色生技 ‧ 永續循環農業</div>
   <h1>農好事® 友善農作系列資材</h1>
@@ -372,7 +498,7 @@
   <!-- 產品展示區 -->
   <div class="section-header">
     <div class="section-title">🌿 農好事系列品項介紹</div>
-    <div class="section-note">點選或輸入數量即可即時計算金額</div>
+    <div class="section-note">每筆訂單滿 <strong>NT$ 3,000 即享免運</strong>，未滿額外加運費 NT$ 150</div>
   </div>
 
   <div class="product-grid">
@@ -397,7 +523,7 @@
           <div class="qty-controller">
             <span class="spec-price">NT$ 400</span>
             <button class="btn-qty" onclick="changeQty('p1_1L', -1)">-</button>
-            <input type="number" id="p1_1L" class="qty-input" value="0" min="0" data-name="新光合發 1L" data-price="400" onchange="calcTotal()">
+            <input type="number" id="p1_1L" class="qty-input" value="0" min="0" data-name="新光合發 (1L)" data-price="400" onchange="calcTotal()">
             <button class="btn-qty" onclick="changeQty('p1_1L', 1)">+</button>
           </div>
         </div>
@@ -406,7 +532,7 @@
           <div class="qty-controller">
             <span class="spec-price">NT$ 1,300</span>
             <button class="btn-qty" onclick="changeQty('p1_4L', -1)">-</button>
-            <input type="number" id="p1_4L" class="qty-input" value="0" min="0" data-name="新光合發 4L" data-price="1300" onchange="calcTotal()">
+            <input type="number" id="p1_4L" class="qty-input" value="0" min="0" data-name="新光合發 (4L)" data-price="1300" onchange="calcTotal()">
             <button class="btn-qty" onclick="changeQty('p1_4L', 1)">+</button>
           </div>
         </div>
@@ -415,7 +541,7 @@
           <div class="qty-controller">
             <span class="spec-price">NT$ 2,500</span>
             <button class="btn-qty" onclick="changeQty('p1_10K', -1)">-</button>
-            <input type="number" id="p1_10K" class="qty-input" value="0" min="0" data-name="新光合發 10Kg" data-price="2500" onchange="calcTotal()">
+            <input type="number" id="p1_10K" class="qty-input" value="0" min="0" data-name="新光合發 (10Kg)" data-price="2500" onchange="calcTotal()">
             <button class="btn-qty" onclick="changeQty('p1_10K', 1)">+</button>
           </div>
         </div>
@@ -424,7 +550,7 @@
           <div class="qty-controller">
             <span class="spec-price">NT$ 3,900</span>
             <button class="btn-qty" onclick="changeQty('p1_20K', -1)">-</button>
-            <input type="number" id="p1_20K" class="qty-input" value="0" min="0" data-name="新光合發 20Kg" data-price="3900" onchange="calcTotal()">
+            <input type="number" id="p1_20K" class="qty-input" value="0" min="0" data-name="新光合發 (20Kg)" data-price="3900" onchange="calcTotal()">
             <button class="btn-qty" onclick="changeQty('p1_20K', 1)">+</button>
           </div>
         </div>
@@ -451,7 +577,7 @@
           <div class="qty-controller">
             <span class="spec-price">NT$ 1,100</span>
             <button class="btn-qty" onclick="changeQty('p2_1L', -1)">-</button>
-            <input type="number" id="p2_1L" class="qty-input" value="0" min="0" data-name="百發酵素 1L" data-price="1100" onchange="calcTotal()">
+            <input type="number" id="p2_1L" class="qty-input" value="0" min="0" data-name="百發酵素 (1L)" data-price="1100" onchange="calcTotal()">
             <button class="btn-qty" onclick="changeQty('p2_1L', 1)">+</button>
           </div>
         </div>
@@ -460,7 +586,7 @@
           <div class="qty-controller">
             <span class="spec-price">NT$ 4,200</span>
             <button class="btn-qty" onclick="changeQty('p2_4L', -1)">-</button>
-            <input type="number" id="p2_4L" class="qty-input" value="0" min="0" data-name="百發酵素 4L" data-price="4200" onchange="calcTotal()">
+            <input type="number" id="p2_4L" class="qty-input" value="0" min="0" data-name="百發酵素 (4L)" data-price="4200" onchange="calcTotal()">
             <button class="btn-qty" onclick="changeQty('p2_4L', 1)">+</button>
           </div>
         </div>
@@ -487,7 +613,7 @@
           <div class="qty-controller">
             <span class="spec-price">NT$ 600</span>
             <button class="btn-qty" onclick="changeQty('p3_1L', -1)">-</button>
-            <input type="number" id="p3_1L" class="qty-input" value="0" min="0" data-name="蓋澎湃 1L" data-price="600" onchange="calcTotal()">
+            <input type="number" id="p3_1L" class="qty-input" value="0" min="0" data-name="蓋澎湃 (1L)" data-price="600" onchange="calcTotal()">
             <button class="btn-qty" onclick="changeQty('p3_1L', 1)">+</button>
           </div>
         </div>
@@ -496,7 +622,7 @@
           <div class="qty-controller">
             <span class="spec-price">NT$ 2,200</span>
             <button class="btn-qty" onclick="changeQty('p3_4L', -1)">-</button>
-            <input type="number" id="p3_4L" class="qty-input" value="0" min="0" data-name="蓋澎湃 4L" data-price="2200" onchange="calcTotal()">
+            <input type="number" id="p3_4L" class="qty-input" value="0" min="0" data-name="蓋澎湃 (4L)" data-price="2200" onchange="calcTotal()">
             <button class="btn-qty" onclick="changeQty('p3_4L', 1)">+</button>
           </div>
         </div>
@@ -523,7 +649,7 @@
           <div class="qty-controller">
             <span class="spec-price">NT$ 900</span>
             <button class="btn-qty" onclick="changeQty('p4_1K', -1)">-</button>
-            <input type="number" id="p4_1K" class="qty-input" value="0" min="0" data-name="益菌寶 1Kg" data-price="900" onchange="calcTotal()">
+            <input type="number" id="p4_1K" class="qty-input" value="0" min="0" data-name="益菌寶 (1Kg)" data-price="900" onchange="calcTotal()">
             <button class="btn-qty" onclick="changeQty('p4_1K', 1)">+</button>
           </div>
         </div>
@@ -550,7 +676,7 @@
           <div class="qty-controller">
             <span class="spec-price">NT$ 600</span>
             <button class="btn-qty" onclick="changeQty('p5_1L', -1)">-</button>
-            <input type="number" id="p5_1L" class="qty-input" value="0" min="0" data-name="耐候王 1L" data-price="600" onchange="calcTotal()">
+            <input type="number" id="p5_1L" class="qty-input" value="0" min="0" data-name="耐候王 (1L)" data-price="600" onchange="calcTotal()">
             <button class="btn-qty" onclick="changeQty('p5_1L', 1)">+</button>
           </div>
         </div>
@@ -559,7 +685,7 @@
           <div class="qty-controller">
             <span class="spec-price">NT$ 2,200</span>
             <button class="btn-qty" onclick="changeQty('p5_4L', -1)">-</button>
-            <input type="number" id="p5_4L" class="qty-input" value="0" min="0" data-name="耐候王 4L" data-price="2200" onchange="calcTotal()">
+            <input type="number" id="p5_4L" class="qty-input" value="0" min="0" data-name="耐候王 (4L)" data-price="2200" onchange="calcTotal()">
             <button class="btn-qty" onclick="changeQty('p5_4L', 1)">+</button>
           </div>
         </div>
@@ -586,7 +712,7 @@
           <div class="qty-controller">
             <span class="spec-price">NT$ 1,600</span>
             <button class="btn-qty" onclick="changeQty('p6_1L', -1)">-</button>
-            <input type="number" id="p6_1L" class="qty-input" value="0" min="0" data-name="蒜辣皂精 1L" data-price="1600" onchange="calcTotal()">
+            <input type="number" id="p6_1L" class="qty-input" value="0" min="0" data-name="蒜辣皂精 (1L)" data-price="1600" onchange="calcTotal()">
             <button class="btn-qty" onclick="changeQty('p6_1L', 1)">+</button>
           </div>
         </div>
@@ -595,7 +721,7 @@
           <div class="qty-controller">
             <span class="spec-price">NT$ 6,200</span>
             <button class="btn-qty" onclick="changeQty('p6_4L', -1)">-</button>
-            <input type="number" id="p6_4L" class="qty-input" value="0" min="0" data-name="蒜辣皂精 4L" data-price="6200" onchange="calcTotal()">
+            <input type="number" id="p6_4L" class="qty-input" value="0" min="0" data-name="蒜辣皂精 (4L)" data-price="6200" onchange="calcTotal()">
             <button class="btn-qty" onclick="changeQty('p6_4L', 1)">+</button>
           </div>
         </div>
@@ -622,7 +748,7 @@
           <div class="qty-controller">
             <span class="spec-price">NT$ 400</span>
             <button class="btn-qty" onclick="changeQty('p7_1L', -1)">-</button>
-            <input type="number" id="p7_1L" class="qty-input" value="0" min="0" data-name="美綠速 1L" data-price="400" onchange="calcTotal()">
+            <input type="number" id="p7_1L" class="qty-input" value="0" min="0" data-name="美綠速 (1L)" data-price="400" onchange="calcTotal()">
             <button class="btn-qty" onclick="changeQty('p7_1L', 1)">+</button>
           </div>
         </div>
@@ -631,7 +757,7 @@
           <div class="qty-controller">
             <span class="spec-price">NT$ 1,500</span>
             <button class="btn-qty" onclick="changeQty('p7_4L', -1)">-</button>
-            <input type="number" id="p7_4L" class="qty-input" value="0" min="0" data-name="美綠速 4L" data-price="1500" onchange="calcTotal()">
+            <input type="number" id="p7_4L" class="qty-input" value="0" min="0" data-name="美綠速 (4L)" data-price="1500" onchange="calcTotal()">
             <button class="btn-qty" onclick="changeQty('p7_4L', 1)">+</button>
           </div>
         </div>
@@ -640,7 +766,7 @@
           <div class="qty-controller">
             <span class="spec-price">NT$ 3,000</span>
             <button class="btn-qty" onclick="changeQty('p7_10L', -1)">-</button>
-            <input type="number" id="p7_10L" class="qty-input" value="0" min="0" data-name="美綠速 10L" data-price="3000" onchange="calcTotal()">
+            <input type="number" id="p7_10L" class="qty-input" value="0" min="0" data-name="美綠速 (10L)" data-price="3000" onchange="calcTotal()">
             <button class="btn-qty" onclick="changeQty('p7_10L', 1)">+</button>
           </div>
         </div>
@@ -649,37 +775,47 @@
 
   </div>
 
-  <!-- 訂購人資料表單 -->
-  <div class="order-section">
-    <div class="section-title">📝 收件與訂單確認資訊</div>
-    <form id="orderForm" onsubmit="handleOrderSubmit(event)">
+  <!-- 訂購表單區 -->
+  <div class="order-section" id="orderFormSection">
+    <div class="section-title">📝 收件與訂購確認</div>
+    
+    <!-- 運費狀態 Banner -->
+    <div class="shipping-banner">
+      <div>
+        <strong>全台配送運費試算：</strong>
+        <span id="shippingNoticeText">滿 NT$ 3,000 即享全島免運</span>
+      </div>
+      <span class="shipping-status-tag status-fee" id="shippingStatusTag">尚未選購商品</span>
+    </div>
+
+    <form id="orderForm">
       <div class="form-grid">
         <div class="form-group">
-          <label>訂購姓名 / 農場名稱 <span>*</span></label>
+          <label>訂購人姓名 / 農場行號 <span>*</span></label>
           <input type="text" id="custName" required placeholder="例如：陳國安 / 安茂果園">
         </div>
         <div class="form-group">
-          <label>聯絡電話 / 手機 <span>*</span></label>
+          <label>聯絡手機 / 電話 <span>*</span></label>
           <input type="tel" id="custPhone" required placeholder="例如：0912-345-678">
         </div>
         <div class="form-group">
-          <label>收件地址 <span>*</span></label>
-          <input type="text" id="custAddress" required placeholder="請填寫完整送貨地址">
+          <label>收件詳細地址 <span>*</span></label>
+          <input type="text" id="custAddress" required placeholder="請填寫完整鄉鎮市區與道路門牌">
         </div>
         <div class="form-group">
           <label>付款方式 <span>*</span></label>
           <select id="payMethod">
-            <option value="貨到付款">貨到付款（黑貓宅急便 / 大榮物流）</option>
+            <option value="貨到付款">貨到付款（黑貓宅急便 / 大榮貨運）</option>
             <option value="銀行匯款">銀行匯款（合作金庫 006 二林分行）</option>
             <option value="農會代收">產銷班 / 農會代收結算</option>
           </select>
         </div>
         <div class="form-group">
-          <label>統一編號 / 抬頭（需要開立三聯發票者填寫）</label>
+          <label>統一編號 / 發票抬頭（需開三聯者填寫）</label>
           <input type="text" id="custTaxId" placeholder="例如：54766327（8碼）">
         </div>
         <div class="form-group">
-          <label>希望到貨時段</label>
+          <label>指定到貨時段</label>
           <select id="deliveryTime">
             <option value="不指定">不指定</option>
             <option value="上午時段 (13:00前)">上午時段 (13:00 前)</option>
@@ -688,13 +824,26 @@
         </div>
       </div>
       <div class="form-group" style="margin-top: 1rem;">
-        <label>栽培作物種類與特別需求（可由佑辰農藝專員免費為您評估稀釋配方）</label>
-        <textarea id="orderNotes" rows="2" placeholder="例如：巨峰葡萄目前剛修剪完畢；或文旦柚即將進行催花..."></textarea>
-      </div>
-      <div class="form-tips">
-        🚚 <strong>出貨說明：</strong>單筆訂購金額滿 <strong>NT$ 3,000</strong> 即享免運配送優惠；未滿額本島酌收物流處理費 NT$ 150。全系列資材均為高活性有機酸體系，切勿與強鹼性資材混合。
+        <label>栽培作物與諮詢備註（佑辰技術專員可免費為您評估稀釋配方）</label>
+        <textarea id="orderNotes" rows="2" placeholder="例如：巨峰葡萄目前即將催花；或文旦柚新梢生長中..."></textarea>
       </div>
     </form>
+
+    <!-- 即時金額計算明細表 -->
+    <table class="order-calc-table">
+      <tr>
+        <td class="calc-label">商品小計：</td>
+        <td class="calc-val" id="subtotalDisplay">NT$ 0</td>
+      </tr>
+      <tr>
+        <td class="calc-label">物流運費（未達 3,000 元加計 150 元）：</td>
+        <td class="calc-val" id="shippingFeeDisplay">NT$ 0</td>
+      </tr>
+      <tr class="calc-total">
+        <td class="calc-label">應付總額（含運）：</td>
+        <td class="calc-val" id="finalTotalDisplay">NT$ 0</td>
+      </tr>
+    </table>
   </div>
 
   <!-- 官方企業資訊與版權 -->
@@ -703,11 +852,6 @@
     <p>統一編號：<strong>54766327</strong> ｜ 代表人：陳信佑</p>
     <p>服務電話：(04) 2233-0268 ｜ 傳真專線：(04) 2241-1488 ｜ 營業時間：週一至週五 08:30 - 17:30</p>
     <p>公司地址：406 臺中市北屯區平田里遼陽北二街11-1號1樓</p>
-    <div class="footer-links">
-      <a href="http://www.agprime.com.tw" target="_blank">佑辰官方網站</a>
-      <span>‧</span>
-      <a href="tel:0422330268">致電農事諮詢專線</a>
-    </div>
   </footer>
 
 </div>
@@ -715,16 +859,68 @@
 <!-- 底部固定總計結帳列 -->
 <div class="floating-footer">
   <div class="summary-info">
-    <span class="total-count-tag" id="totalQtyDisplay">已選購 0 件商品</span>
-    <div class="total-price-wrap">
-      合計總金額：<span class="total-price" id="totalAmountDisplay">NT$ 0</span>
+    <div class="summary-line-1">
+      <span id="floatingQty">已選 0 件商品</span>
+      <span>｜</span>
+      <span id="floatingShipping">運費：NT$ 0</span>
+    </div>
+    <div class="summary-line-2">
+      應付總金額：<span class="total-price" id="floatingTotal">NT$ 0</span>
     </div>
   </div>
-  <button type="submit" form="orderForm" class="btn-submit-order">確認送出訂購單</button>
+  <button type="button" class="btn-submit-order" onclick="triggerOrderSubmit()">確認送出訂購單</button>
 </div>
 
-<!-- 互動計算與訂單生成 Script -->
+<!-- 訂單確認與送出成功彈窗 (Modal) -->
+<div class="modal-backdrop" id="orderModal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3>🎉 訂單已成功建立！</h3>
+      <p>請確認以下訂單資訊，並可選擇 LINE 即時傳送或列印備查</p>
+    </div>
+    <div class="modal-body">
+      <div class="order-meta-box" id="modalMeta">
+        <!-- JS 動態插入收件資料 -->
+      </div>
+      
+      <table class="modal-items-table">
+        <thead>
+          <tr>
+            <th>訂購品項與規格</th>
+            <th style="text-align:center;">數量</th>
+            <th style="text-align:right;">小計</th>
+          </tr>
+        </thead>
+        <tbody id="modalItemsBody">
+          <!-- JS 動態插入品項 -->
+        </tbody>
+      </table>
+
+      <div style="text-align:right; font-size: 1.05rem; padding-top: 6px; border-top: 2px solid #e2e8f0;">
+        <span style="color:#64748b; font-size:0.9rem;">含運總計應付：</span>
+        <strong style="color:var(--vi-highlight); font-size: 1.4rem;" id="modalFinalAmount">NT$ 0</strong>
+      </div>
+
+      <div class="modal-actions">
+        <a id="btnLineSend" target="_blank" class="btn-action btn-line">📲 使用 LINE 傳送訂單給佑辰</a>
+        <a id="btnEmailSend" class="btn-action btn-email">✉️ 透過 Email 傳送確認信</a>
+        <button class="btn-action btn-print" onclick="window.print()">🖨️ 列印 / 另存本訂單為 PDF</button>
+        <button class="btn-action btn-close" onclick="closeModal()">關閉本視窗</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
+  const FREE_SHIPPING_THRESHOLD = 3000; // 免運門檻
+  const SHIPPING_FEE = 150;              // 基本運費
+
+  let currentSubtotal = 0;
+  let currentShipping = 0;
+  let currentFinalTotal = 0;
+  let currentSelectedItems = [];
+
+  // 數量加減控制
   function changeQty(id, delta) {
     const input = document.getElementById(id);
     let val = parseInt(input.value) || 0;
@@ -733,74 +929,176 @@
     calcTotal();
   }
 
+  // 即時計算小計、自動判斷運費與總計
   function calcTotal() {
-    let total = 0;
+    let subtotal = 0;
     let totalQty = 0;
+    currentSelectedItems = [];
+
     const inputs = document.querySelectorAll('.qty-input');
     inputs.forEach(input => {
       const price = parseInt(input.getAttribute('data-price')) || 0;
       const qty = parseInt(input.value) || 0;
       if (qty > 0) {
-        total += price * qty;
+        const itemSubtotal = price * qty;
+        subtotal += itemSubtotal;
         totalQty += qty;
+        currentSelectedItems.push({
+          name: input.getAttribute('data-name'),
+          price: price,
+          qty: qty,
+          subtotal: itemSubtotal
+        });
       }
     });
 
-    document.getElementById('totalQtyDisplay').textContent = `已選購 ${totalQty} 件商品`;
-    document.getElementById('totalAmountDisplay').textContent = 'NT$ ' + total.toLocaleString();
+    currentSubtotal = subtotal;
+
+    // 自動判斷運費邏輯
+    const shippingTag = document.getElementById('shippingStatusTag');
+    const shippingNotice = document.getElementById('shippingNoticeText');
+
+    if (subtotal === 0) {
+      currentShipping = 0;
+      shippingTag.textContent = '尚未選購商品';
+      shippingTag.className = 'shipping-status-tag status-fee';
+      shippingNotice.innerHTML = '滿 NT$ 3,000 即享全島免運';
+    } else if (subtotal >= FREE_SHIPPING_THRESHOLD) {
+      currentShipping = 0;
+      shippingTag.textContent = '已達免運門檻（免運費）';
+      shippingTag.className = 'shipping-status-tag status-free';
+      shippingNotice.innerHTML = `已符合滿額 <strong>NT$ 3,000 免運</strong> 優惠！`;
+    } else {
+      currentShipping = SHIPPING_FEE;
+      const gap = FREE_SHIPPING_THRESHOLD - subtotal;
+      shippingTag.textContent = `加計運費 NT$ ${SHIPPING_FEE}`;
+      shippingTag.className = 'shipping-status-tag status-fee';
+      shippingNotice.innerHTML = `商品合計 NT$ ${subtotal.toLocaleString()}，還差 <strong>NT$ ${gap.toLocaleString()}</strong> 即可享免運！`;
+    }
+
+    currentFinalTotal = currentSubtotal + currentShipping;
+
+    // 更新介面數值
+    document.getElementById('subtotalDisplay').textContent = `NT$ ${currentSubtotal.toLocaleString()}`;
+    document.getElementById('shippingFeeDisplay').textContent = currentShipping === 0 
+      ? (subtotal > 0 ? 'NT$ 0 (免運)' : 'NT$ 0') 
+      : `NT$ ${currentShipping.toLocaleString()}`;
+    document.getElementById('finalTotalDisplay').textContent = `NT$ ${currentFinalTotal.toLocaleString()}`;
+
+    // 更新浮動列
+    document.getElementById('floatingQty').textContent = `已選 ${totalQty} 件商品`;
+    document.getElementById('floatingShipping').textContent = currentShipping === 0 
+      ? (subtotal > 0 ? '免運費' : '運費：NT$ 0') 
+      : `運費：NT$ ${currentShipping}`;
+    document.getElementById('floatingTotal').textContent = `NT$ ${currentFinalTotal.toLocaleString()}`;
   }
 
-  function handleOrderSubmit(e) {
-    e.preventDefault();
-    
+  // 觸發訂單送出驗證與確認
+  function triggerOrderSubmit() {
     // 檢查是否有選購商品
-    const inputs = document.querySelectorAll('.qty-input');
-    let orderItems = [];
-    let grandTotal = 0;
-
-    inputs.forEach(input => {
-      const qty = parseInt(input.value) || 0;
-      if (qty > 0) {
-        const name = input.getAttribute('data-name');
-        const price = parseInt(input.getAttribute('data-price'));
-        const subtotal = price * qty;
-        grandTotal += subtotal;
-        orderItems.push(`● ${name} × ${qty} 件 = NT$ ${subtotal.toLocaleString()}`);
-      }
-    });
-
-    if (orderItems.length === 0) {
-      alert('請先在上方商品清單中選取您要訂購的數量！');
-      window.scrollTo({ top: 400, behavior: 'smooth' });
+    if (currentSelectedItems.length === 0) {
+      alert('請先在上方產品清單中選取您要訂購的數量！');
+      window.scrollTo({ top: 350, behavior: 'smooth' });
       return;
     }
 
-    const name = document.getElementById('custName').value;
-    const phone = document.getElementById('custPhone').value;
-    const addr = document.getElementById('custAddress').value;
-    const pay = document.getElementById('payMethod').value;
-    const taxId = document.getElementById('custTaxId').value || '無統編';
-    const time = document.getElementById('deliveryTime').value;
-    const notes = document.getElementById('orderNotes').value || '無特別備註';
+    // 檢查必填欄位
+    const name = document.getElementById('custName').value.trim();
+    const phone = document.getElementById('custPhone').value.trim();
+    const address = document.getElementById('custAddress').value.trim();
 
-    const orderSummary = 
-      `【佑辰農好事 - 訂單確認】\n` +
-      `--------------------------------\n` +
+    if (!name || !phone || !address) {
+      alert('請完整填寫收件資訊：訂購人姓名、聯絡電話、收件地址為必填欄位！');
+      document.getElementById('orderFormSection').scrollIntoView({ behavior: 'smooth' });
+      if (!name) document.getElementById('custName').focus();
+      else if (!phone) document.getElementById('custPhone').focus();
+      else if (!address) document.getElementById('custAddress').focus();
+      return;
+    }
+
+    const payMethod = document.getElementById('payMethod').value;
+    const taxId = document.getElementById('custTaxId').value.trim() || '無統編抬頭';
+    const deliveryTime = document.getElementById('deliveryTime').value;
+    const notes = document.getElementById('orderNotes').value.trim() || '無特別備註';
+
+    // 產生流水訂單編號
+    const now = new Date();
+    const dateStr = now.toISOString().slice(0, 10).replace(/-/g, '');
+    const randStr = Math.floor(1000 + Math.random() * 9000);
+    const orderNo = `YC-${dateStr}-${randStr}`;
+
+    // 組裝彈窗資訊
+    document.getElementById('modalMeta').innerHTML = `
+      <strong>訂單編號：</strong>${orderNo}<br>
+      <strong>訂購人 / 農場：</strong>${name} ｜ <strong>電話：</strong>${phone}<br>
+      <strong>收件地址：</strong>${address}<br>
+      <strong>付款方式：</strong>${payMethod} ｜ <strong>指定時段：</strong>${deliveryTime}<br>
+      <strong>統一編號：</strong>${taxId}<br>
+      <strong>作物與備註：</strong>${notes}
+    `;
+
+    // 組裝品項清單
+    let itemsHtml = '';
+    currentSelectedItems.forEach(item => {
+      itemsHtml += `
+        <tr>
+          <td>${item.name}</td>
+          <td style="text-align:center;">${item.qty}</td>
+          <td style="text-align:right;">NT$ ${item.subtotal.toLocaleString()}</td>
+        </tr>
+      `;
+    });
+
+    itemsHtml += `
+      <tr>
+        <td colspan="2" style="text-align:right; color:#64748b;">商品小計：</td>
+        <td style="text-align:right;">NT$ ${currentSubtotal.toLocaleString()}</td>
+      </tr>
+      <tr>
+        <td colspan="2" style="text-align:right; color:#64748b;">物流運費：</td>
+        <td style="text-align:right;">${currentShipping === 0 ? '免運費' : 'NT$ ' + currentShipping.toLocaleString()}</td>
+      </tr>
+    `;
+
+    document.getElementById('modalItemsBody').innerHTML = itemsHtml;
+    document.getElementById('modalFinalAmount').textContent = `NT$ ${currentFinalTotal.toLocaleString()}`;
+
+    // 組裝文字純文本（供 LINE / Email 傳送）
+    let textSummary = `【佑辰農好事 - 官方線上訂購單】\n` +
+      `訂單編號：${orderNo}\n` +
       `訂購人：${name}\n` +
       `電話：${phone}\n` +
-      `地址：${addr}\n` +
-      `付款方式：${pay}\n` +
-      `統編抬頭：${taxId}\n` +
-      `收件時段：${time}\n` +
-      `作物/備註：${notes}\n` +
-      `--------------------------------\n` +
-      `訂購明細：\n${orderItems.join('\n')}\n` +
-      `--------------------------------\n` +
-      `總計金額：NT$ ${grandTotal.toLocaleString()} 元\n` +
-      `--------------------------------\n` +
-      `感謝您的訂購！佑辰農事專員將致電與您確認出貨事宜。`;
+      `地址：${address}\n` +
+      `付款方式：${payMethod}\n` +
+      `統一編號：${taxId}\n` +
+      `指定時段：${deliveryTime}\n` +
+      `作物/備註：${notes}\n\n` +
+      `【訂購明細】\n`;
 
-    alert(orderSummary);
+    currentSelectedItems.forEach(item => {
+      textSummary += `● ${item.name} × ${item.qty} = NT$ ${item.subtotal.toLocaleString()}\n`;
+    });
+
+    textSummary += `\n商品小計：NT$ ${currentSubtotal.toLocaleString()}\n`;
+    textSummary += `物流運費：${currentShipping === 0 ? 'NT$ 0 (免運)' : 'NT$ ' + currentShipping.toLocaleString()}\n`;
+    textSummary += `總應付金額：NT$ ${currentFinalTotal.toLocaleString()}\n\n`;
+    textSummary += `請佑辰農事專員協助核對並安排出貨，謝謝！`;
+
+    // 綁定 LINE 分享連結
+    const lineUrl = `https://line.me/R/msg/text/?${encodeURIComponent(textSummary)}`;
+    document.getElementById('btnLineSend').href = lineUrl;
+
+    // 綁定 Email 傳送
+    const mailSubject = encodeURIComponent(`【佑辰農好事訂購單】${orderNo} - ${name}`);
+    const mailBody = encodeURIComponent(textSummary);
+    document.getElementById('btnEmailSend').href = `mailto:service@agprime.com.tw?subject=${mailSubject}&body=${mailBody}`;
+
+    // 開啟彈窗
+    document.getElementById('orderModal').classList.add('active');
+  }
+
+  function closeModal() {
+    document.getElementById('orderModal').classList.remove('active');
   }
 </script>
 </body>
