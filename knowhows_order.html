@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>佑辰農好事系列資材 | 永續農業生技 ‧ 線上產品介紹與訂購系統</title>
+<meta name="description" content="佑辰有限公司農好事系列友善農作資材，包含新光合發、百發酵素、蓋澎湃、益菌寶、耐候王、蒜辣皂精、美綠速，助您突破氣候逆境、減藥增產。">
+<style>
+  :root {
+    /* 佑辰 VI 規範色彩 */
+    --vi-primary-green: #11572d;   /* C90 M50 Y100 K0 佑辰深綠 */
+    --vi-accent-green: #48a13a;    /* C70 M20 Y100 K0 活力綠 */
+    --vi-light-bg: #f5f8f3;        /* 柔和大自然底色 */
+    --vi-card-bg: #ffffff;
+    --vi-text-main: #1f2921;
+    --vi-text-muted: #536456;
+    --vi-border: #d4e0d2;
+    --vi-highlight: #d97706;       /* 價格琥珀金 */
+    --vi-highlight-bg: #fffbeb;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang TC", "Microsoft JhengHei", sans-serif;
+    background-color: var(--vi-light-bg);
+    color: var(--vi-text-main);
+    line-height: 1.6;
+    padding-bottom: 110px; /* 留出底部結帳 Bar 空間 */
+  }
+
+  /* 頂部 Hero 品牌區 */
+  header {
+    background: linear-gradient(135deg, #0d4021 0%, var(--vi-primary-green) 100%);
+    color: #ffffff;
+    padding: 3rem 1.5rem 2.5rem;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(17,87,45,0.15);
+  }
+  .brand-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 5px 16px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+  header h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 0.6rem;
+  }
+  header .subtitle {
+    font-size: 1.05rem;
+    color: #d1ebd4;
+    max-width: 720px;
+    margin: 0 auto;
+    font-weight: 300;
+  }
+
+  /* 核心理念條 */
+  .concept-strip {
+    background: #ffffff;
+    border-bottom: 1px solid var(--vi-border);
+    padding: 12px 1rem;
+    font-size: 0.9rem;
+    color: var(--vi-text-muted);
+    text-align: center;
+  }
+  .concept-strip strong { color: var(--vi-primary-green); }
+
+  /* 主容器 */
+  .main-container {
+    max-width: 1120px;
+    margin: 2rem auto;
+    padding: 0 1.25rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 2.5rem 0 1.2rem;
+    border-bottom: 2px solid var(--vi-border);
+    padding-bottom: 0.6rem;
+  }
+  .section-title {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--vi-primary-green);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-note {
+    font-size: 0.85rem;
+    color: var(--vi-text-muted);
+  }
+
+  /* 商品介紹卡片 Grid */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+    gap: 1.5rem;
+  }
+  .product-card {
+    background: var(--vi-card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--vi-border);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+    padding: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .product-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(17,87,45,0.09);
+    border-color: var(--vi-accent-green);
+  }
+  .card-top { margin-bottom: 1rem; }
+  .p-category {
+    font-size: 0.75rem;
+    background: #eef6ed;
+    color: var(--vi-primary-green);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 0.4rem;
+  }
+  .p-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--vi-primary-green);
+    margin-bottom: 4px;
+  }
+  .p-cert {
+    font-size: 0.78rem;
+    color: #728475;
+    margin-bottom: 0.75rem;
+  }
+  .p-mechanism {
+    font-size: 0.88rem;
+    color: var(--vi-text-main);
+    line-height: 1.5;
+    margin-bottom: 0.8rem;
+  }
+  .p-mechanism strong {
+    color: #0b3d1f;
+  }
+  .p-usage {
+    background: #fbfdfa;
+    border-left: 3px solid var(--vi-accent-green);
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    color: #405543;
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 1rem;
+  }
+
+  /* 規格與價格選購列 */
+  .spec-container {
+    background: #fafcfa;
+    border-radius: 8px;
+    border: 1px solid #e7efe5;
+    padding: 0.5rem 0.8rem;
+  }
+  .spec-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px dashed #e2ede0;
+  }
+  .spec-item:last-child { border-bottom: none; }
+  .spec-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #2b3a2d;
+  }
+  .spec-price {
+    color: var(--vi-highlight);
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-right: 10px;
+  }
+  .qty-controller {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn-qty {
+    width: 26px;
+    height: 26px;
+    background: #e9f2e7;
+    border: 1px solid #ccdcc9;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--vi-primary-green);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+  }
+  .btn-qty:hover { background: #d7e8d3; }
+  .qty-input {
+    width: 48px;
+    height: 28px;
+    text-align: center;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1f2937;
+  }
+
+  /* 訂購人資料表單 */
+  .order-section {
+    background: var(--vi-card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--vi-border);
+    padding: 2rem;
+    margin-top: 2rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1rem;
+  }
+  .form-group { display: flex; flex-direction: column; }
+  .form-group label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--vi-text-main);
+  }
+  .form-group label span { color: #dc2626; }
+  .form-group input, .form-group select, .form-group textarea {
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    background-color: #fafcf9;
+    transition: border-color 0.2s, background-color 0.2s;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: var(--vi-accent-green);
+    background-color: #ffffff;
+  }
+  .form-tips {
+    font-size: 0.82rem;
+    color: #64748b;
+    margin-top: 1rem;
+    line-height: 1.5;
+    background: #f8fafc;
+    padding: 10px 12px;
+    border-radius: 6px;
+  }
+
+  /* 底部固定總計結帳列 */
+  .floating-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--vi-border);
+    padding: 14px 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.07);
+    z-index: 1000;
+  }
+  .summary-info {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .total-count-tag {
+    font-size: 0.9rem;
+    color: var(--vi-text-muted);
+  }
+  .total-price-wrap {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--vi-primary-green);
+  }
+  .total-price {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: var(--vi-highlight);
+    margin-left: 4px;
+  }
+  .btn-submit-order {
+    background: var(--vi-primary-green);
+    color: #ffffff;
+    border: none;
+    padding: 12px 32px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    letter-spacing: 0.5px;
+  }
+  .btn-submit-order:hover {
+    background: var(--vi-accent-green);
+  }
+  .btn-submit-order:active {
+    transform: scale(0.98);
+  }
+
+  /* 頁尾官方品牌資訊 */
+  footer {
+    max-width: 1120px;
+    margin: 3rem auto 1rem;
+    padding: 2rem 1.25rem 0;
+    border-top: 1px solid var(--vi-border);
+    color: var(--vi-text-muted);
+    font-size: 0.88rem;
+    line-height: 1.6;
+    text-align: center;
+  }
+  .footer-links {
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 0.85rem;
+  }
+  .footer-links a { color: var(--vi-primary-green); text-decoration: none; }
+  .footer-links a:hover { text-decoration: underline; }
+
+  @media (max-width: 768px) {
+    header h1 { font-size: 1.8rem; }
+    .floating-footer { flex-direction: column; gap: 10px; padding: 10px 1rem; }
+    .btn-submit-order { width: 100%; }
+    .summary-info { width: 100%; justify-content: space-between; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 頂部 Hero 品牌區 -->
+<header>
+  <div class="brand-badge">AGPRIME 佑辰綠色生技 ‧ 永續循環農業</div>
+  <h1>農好事® 友善農作系列資材</h1>
+  <p class="subtitle">從作物生理代謝機制著手，兼具生長激發、土壤復育與病害物理預防，助您打造健康果園與豐盛收成。</p>
+</header>
+
+<div class="concept-strip">
+  🌱 <strong>永續承諾：</strong>天然有機酸與微生物發酵體系 ｜ 零抗藥性 ｜ 無化學殘留 ｜ 守護土地健康與農產食用安全
+</div>
+
+<div class="main-container">
+
+  <!-- 產品展示區 -->
+  <div class="section-header">
+    <div class="section-title">🌿 農好事系列品項介紹</div>
+    <div class="section-note">點選或輸入數量即可即時計算金額</div>
+  </div>
+
+  <div class="product-grid">
+
+    <!-- 1. 新光合發 -->
+    <div class="product-card">
+      <div class="card-top">
+        <span class="p-category">機能型有機酸酵素肥</span>
+        <div class="p-title">農好事 新光合發</div>
+        <div class="p-cert">肥料登記證：肥製(質)字第 0602024 號</div>
+        <div class="p-mechanism">
+          <strong>【核心機制】</strong>富含益生菌代謝物、綜合有機酸與微量元素。<br>
+          <strong>【主要功效】</strong>提高碳氮比，抑制氮肥造成的過度徒長；刺激自體抗病力，提高肥料轉換率，產量最高增產40%，蔬果耐儲鮮甜。灌注土壤能分解有害殘留，快速補充地力。
+        </div>
+        <div class="p-usage">
+          <strong>施用指引：</strong>葉面噴灑稀釋 300-500 倍 (月 2-4 次)；土壤澆灌稀釋 200-300 倍 (月 1-2 次)。可混中/酸性資材。
+        </div>
+      </div>
+      <div class="spec-container">
+        <div class="spec-item">
+          <span class="spec-name">1 公升 隨手瓶</span>
+          <div class="qty-controller">
+            <span class="spec-price">NT$ 400</span>
+            <button class="btn-qty" onclick="changeQty('p1_1L', -1)">-</button>
+            <input type="number" id="p1_1L" class="qty-input" value="0" min="0" data-name="新光合發 1L" data-price="400" onchange="calcTotal()">
+            <button class="btn-qty" onclick="changeQty('p1_1L', 1)">+</button>
+          </div>
+        </div>
+        <div class="spec-item">
+          <span class="spec-name">4 公升 經濟桶</span>
+          <div class="qty-controller">
+            <span class="spec-price">NT$ 1,300</span>
+            <button class="btn-qty" onclick="changeQty('p1_4L', -1)">-</button>
+            <input type="number" id="p1_4L" class="qty-input" value="0" min="0" data-name="新光合發 4L" data-price="1300" onchange="calcTotal()">
+            <button class="btn-qty" onclick="changeQty('p1_4L', 1)">+</button>
+          </div>
+        </div>
+        <div class="spec-item">
+          <span class="spec-name">10 公斤 專業裝</span>
+          <div class="qty-controller">
+            <span class="spec-price">NT$ 2,500</span>
+            <button class="btn-qty" onclick="changeQty('p1_10K', -1)">-</button>
+            <input type="number" id="p1_10K" class="qty-input" value="0" min="0" data-name="新光合發 10Kg" data-price="2500" onchange="calcTotal()">
+            <button class="btn-qty" onclick="changeQty('p1_10K', 1)">+</button>
+          </div>
+        </div>
+        <div class="spec-item">
+          <span class="spec-name">20 公斤 農場桶</span>
+          <div class="qty-controller">
+            <span class="spec-price">NT$ 3,900</span>
+            <button class="btn-qty" onclick="changeQty('p1_20K', -1)">-</button>
+            <input type="number" id="p1_20K" class="qty-input" value="0" min="0" data-name="新光合發 20Kg" data-price="3900" onchange="calcTotal()">
+            <button class="btn-qty" onclick="changeQty('p1_20K', 1)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. 百發酵素 -->
+    <div class="product-card">
+      <div class="card-top">
+        <span class="p-category">生長耐候 ‧ 花芽發育活性劑</span>
+        <div class="p-title">農好事 百發酵素</div>
+        <div class="p-cert">肥料登記證：肥製(質)字第 0602021 號</div>
+        <div class="p-mechanism">
+          <strong>【核心機制】</strong>植物幼苗與花粉天然萃取物，搭配抗逆境脯胺酸。<br>
+          <strong>【主要功效】</strong>被譽為作物的「天然胎盤素」。提升苗期生長活力與耐候力；大幅促進花芽分化、開花量與授粉成功率。果實飽滿端正，減少畸形果，產期延長 2-4 週，產量提升 20-30%。
+        </div>
+        <div class="p-usage">
+          <strong>施用指引：</strong>葉面噴灑稀釋 800-1500 倍 (每 5-7 天一次，苗期/開花前後/幼果期定期噴施)。忌混強鹼資材。
+        </div>
+      </div>
+      <div class="spec-container">
+        <div class="spec-item">
+          <span class="spec-name">1 公升 裝</span>
+          <div class="qty-controller">
+            <span class="spec-price">NT$ 1,100</span>
+            <button class="btn-qty" onclick="changeQty('p2_1L', -1)">-</button>
+            <input type="number" id="p2_1L" class="qty-input" value="0" min="0" data-name="百發酵素 1L" data-price="1100" onchange="calcTotal()">
+            <button class="btn-qty" onclick="changeQty('p2_1L', 1)">+</button>
+          </div>
+        </div>
+        <div class="spec-item">
+          <span class="spec-name">4 公升 裝</span>
+          <div class="qty-controller">
+            <span class="spec-price">NT$ 4,200</span>
+            <button class="btn-qty" onclick="changeQty('p2_4L', -1)">-</button>
+            <input type="number" id="p2_4L" class="qty-input" value="0" min="0" data-name="百發酵素 4L" data-price="4200" onchange="calcTotal()">
+            <button class="btn-qty" onclick="changeQty('p2_4L', 1)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. 蓋澎湃 -->
+    <div class="product-card">
+      <div class="card-top">
+        <span class="p-category">木質素螯合生化鈣</span>
+        <div class="p-title">農好事 蓋澎湃</div>
+        <div class="p-cert">植物保護資材：植保製字第 00816 號</div>
+        <div class="p-mechanism">
+          <strong>【核心機制】</strong>高分子木質素發酵物 ＋ 頂級珍珠鈣與微量元素。<br>
+          <strong>【主要功效】</strong>藉由高親和性木質素分子高效載送鈣離子滲透葉片與果實，改善番茄臍腐/尻腐病、蔥蒜韭乾尾及裂果；強健細胞壁厚度，果肉 Q 彈緊實、色澤光亮鮮豔，大幅延長儲運期。
+        </div>
+        <div class="p-usage">
+          <strong>施用指引：</strong>冬季葉面稀釋 800-1000 倍；夏季高溫或快速生長期稀釋 400-500 倍噴施。可與中/酸性資材混用。
+        </div>
+      </div>
+      <div class="spec-container">
+        <div class="spec-item">
+          <span class="spec-name">1 公升 裝</span>
+          <div class="qty-controller">
+            <span class="spec-price">NT$ 600</span>
+            <button class="btn-qty" onclick="changeQty('p3_1L', -1)">-</button>
+            <input type="number" id="p3_1L" class="qty-input" value="0" min="0" data-name="蓋澎湃 1L" data-price="600" onchange="calcTotal()">
+            <button class="btn-qty" onclick="changeQty('p3_1L', 1)">+</button>
+          </div>
+        </div>
+        <div class="spec-item">
+          <span class="spec-name">4 公升 裝</span>
+          <div class="qty-controller">
+            <span class="spec-price">NT$ 2,200</span>
+            <button class="btn-qty" onclick="changeQty('p3_4L', -1)">-</button>
+            <input type="number" id="p3_4L" class="qty-input" value="0" min="0" data-name="蓋澎湃 4L" data-price="2200" onchange="calcTotal()">
+            <button class="btn-qty" onclick="changeQty('p3_4L', 1)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. 益菌寶 -->
+    <div class="product-card">
+      <div class="card-top">
+        <span class="p-category">微生態根圈保護劑</span>
+        <div class="p-title">農好事 益菌寶</div>
+        <div class="p-cert">生技級複合有益微生物原粉</div>
+        <div class="p-mechanism">
+          <strong>【核心機制】</strong>枯草芽孢桿菌 ＋ 液化澱粉芽孢桿菌 ＋ 70種天然礦物元素。<br>
+          <strong>【主要功效】</strong>迅速在根圈建立強勢優勢菌群，分泌抑菌抗生物質，抵禦病害雜菌威脅；強效分解土壤沉積有機質與殘留化肥，徹底緩解連作障礙與鹽漬化，深層活化根系生長。
+        </div>
+        <div class="p-usage">
+          <strong>施用指引：</strong>葉面稀釋 800-1000 倍 (2-4 週噴施一次)；土壤灌注稀釋 500 倍或每分地 250 公克隨水澆灌 (20 天一次)。
+        </div>
+      </div>
+      <div class="spec-container">
+        <div class="spec-item">
+          <span class="spec-name">1 公斤 鋁箔裝</span>
+          <div class="qty-controller">
+            <span class="spec-price">NT$ 900</span>
+            <button class="btn-qty" onclick="changeQty('p4_1K', -1)">-</button>
+            <input type="number" id="p4_1K" class="qty-input" value="0" min="0" data-name="益菌寶 1Kg" data-price="900" onchange="calcTotal()">
+            <button class="btn-qty" onclick="changeQty('p4_1K', 1)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. 耐候王 -->
+    <div class="product-card">
+      <div class="card-top">
+        <span class="p-category">極端天候物理防護劑</span>
+        <div class="p-title">農好事 耐候王</div>
+        <div class="p-cert">天然抗逆境物理防護保護劑</div>
+        <div class="p-mechanism">
+          <strong>【核心機制】</strong>雙極短碳鏈磷脂質 ＋ 蜂蠟萃取 ＋ 植物抗凍萃取精華。<br>
+          <strong>【主要功效】</strong>親水親油雙特性，乾燥後在作物葉表形成透氣、不透水的微細保護薄膜。能有效抑制暴曬、寒流、焚風或強風造成的極端水分蒸散，防止葉表積水染病，增強自體耐候力。
+        </div>
+        <div class="p-usage">
+          <strong>施用指引：</strong>稀釋 600-800 倍均勻噴灑葉面；極端氣候（寒流、乾旱、焚風）來臨前 2-3 天使用最佳。
+        </div>
+      </div>
+      <div class="spec-container">
+        <div class="spec-item">
+          <span class="spec-name">1 公升 裝</span>
+          <div class="qty-controller">
+            <span class="spec-price">NT$ 600</span>
+            <button class="btn-qty" onclick="changeQty('p5_1L', -1)">-</button>
+            <input type="number" id="p5_1L" class="qty-input" value="0" min="0" data-name="耐候王 1L" data-price="600" onchange="calcTotal()">
+            <button class="btn-qty" onclick="changeQty('p5_1L', 1)">+</button>
+          </div>
+        </div>
+        <div class="spec-item">
+          <span class="spec-name">4 公升 裝</span>
+          <div class="qty-controller">
+            <span class="spec-price">NT$ 2,200</span>
+            <button class="btn-qty" onclick="changeQty('p5_4L', -1)">-</button>
+            <input type="number" id="p5_4L" class="qty-input" value="0" min="0" data-name="耐候王 4L" data-price="2200" onchange="calcTotal()">
+            <button class="btn-qty" onclick="changeQty('p5_4L', 1)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. 蒜辣皂精 -->
+    <div class="product-card">
+      <div class="card-top">
+        <span class="p-category">天然多重觸殺驅蟲資材</span>
+        <div class="p-title">農好事 蒜辣皂精</div>
+        <div class="p-cert">植物保護資材：植保製字第 00192 號</div>
+        <div class="p-mechanism">
+          <strong>【核心機制】</strong>高濃縮大蒜素 ＋ 辣椒素 ＋ 苦茶皂素 ＋ 漢方草藥精油。<br>
+          <strong>【主要功效】</strong>四效合一（強烈氣味忌避、窒息體表氣門、物理觸殺、溶解害蟲保護蠟層）。針對薊馬、蚜蟲、紅蜘蛛、粉蝨及黃條葉蚤具顯著防治效果。天然無毒無農殘，採收期可安心使用。
+        </div>
+        <div class="p-usage">
+          <strong>施用指引：</strong>葉面稀釋 800-1000 倍噴施，蟲害好發期每 3-5 天一次。初次使用請先小區域測試，避免高溫烈日下噴施。
+        </div>
+      </div>
+      <div class="spec-container">
+        <div class="spec-item">
+          <span class="spec-name">1 公升 裝</span>
+          <div class="qty-controller">
+            <span class="spec-price">NT$ 1,600</span>
+            <button class="btn-qty" onclick="changeQty('p6_1L', -1)">-</button>
+            <input type="number" id="p6_1L" class="qty-input" value="0" min="0" data-name="蒜辣皂精 1L" data-price="1600" onchange="calcTotal()">
+            <button class="btn-qty" onclick="changeQty('p6_1L', 1)">+</button>
+          </div>
+        </div>
+        <div class="spec-item">
+          <span class="spec-name">4 公升 裝</span>
+          <div class="qty-controller">
+            <span class="spec-price">NT$ 6,200</span>
+            <button class="btn-qty" onclick="changeQty('p6_4L', -1)">-</button>
+            <input type="number" id="p6_4L" class="qty-input" value="0" min="0" data-name="蒜辣皂精 4L" data-price="6200" onchange="calcTotal()">
+            <button class="btn-qty" onclick="changeQty('p6_4L', 1)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. 美綠速 -->
+    <div class="product-card">
+      <div class="card-top">
+        <span class="p-category">催花與轉色成熟營養劑</span>
+        <div class="p-title">農好事 美綠速</div>
+        <div class="p-cert">高效水溶高磷鉀螯合營養劑</div>
+        <div class="p-mechanism">
+          <strong>【核心機制】</strong>特殊高磷鉀配方 ＋ 螯合微量元素群。<br>
+          <strong>【主要功效】</strong>促進枝葉成熟老化，使葉片增厚轉濃綠。果樹開花前期若花量不足，能做為安全的二次催花資材，絕不產生傳統化學催花的抑芽傷害；後期能促使養分快速回流蓄積，提升果實糖度。
+        </div>
+        <div class="p-usage">
+          <strong>施用指引：</strong>增綠成熟：稀釋 800-1000 倍葉噴；再次催花：稀釋 500-600 倍葉噴。（※注意事項：催花使用前絕對不可先追施高氮肥）。
+        </div>
+      </div>
+      <div class="spec-container">
+        <div class="spec-item">
+          <span class="spec-name">1 公升 裝</span>
+          <div class="qty-controller">
+            <span class="spec-price">NT$ 400</span>
+            <button class="btn-qty" onclick="changeQty('p7_1L', -1)">-</button>
+            <input type="number" id="p7_1L" class="qty-input" value="0" min="0" data-name="美綠速 1L" data-price="400" onchange="calcTotal()">
+            <button class="btn-qty" onclick="changeQty('p7_1L', 1)">+</button>
+          </div>
+        </div>
+        <div class="spec-item">
+          <span class="spec-name">4 公升 裝</span>
+          <div class="qty-controller">
+            <span class="spec-price">NT$ 1,500</span>
+            <button class="btn-qty" onclick="changeQty('p7_4L', -1)">-</button>
+            <input type="number" id="p7_4L" class="qty-input" value="0" min="0" data-name="美綠速 4L" data-price="1500" onchange="calcTotal()">
+            <button class="btn-qty" onclick="changeQty('p7_4L', 1)">+</button>
+          </div>
+        </div>
+        <div class="spec-item">
+          <span class="spec-name">10 公升 專業桶</span>
+          <div class="qty-controller">
+            <span class="spec-price">NT$ 3,000</span>
+            <button class="btn-qty" onclick="changeQty('p7_10L', -1)">-</button>
+            <input type="number" id="p7_10L" class="qty-input" value="0" min="0" data-name="美綠速 10L" data-price="3000" onchange="calcTotal()">
+            <button class="btn-qty" onclick="changeQty('p7_10L', 1)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 訂購人資料表單 -->
+  <div class="order-section">
+    <div class="section-title">📝 收件與訂單確認資訊</div>
+    <form id="orderForm" onsubmit="handleOrderSubmit(event)">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>訂購姓名 / 農場名稱 <span>*</span></label>
+          <input type="text" id="custName" required placeholder="例如：陳國安 / 安茂果園">
+        </div>
+        <div class="form-group">
+          <label>聯絡電話 / 手機 <span>*</span></label>
+          <input type="tel" id="custPhone" required placeholder="例如：0912-345-678">
+        </div>
+        <div class="form-group">
+          <label>收件地址 <span>*</span></label>
+          <input type="text" id="custAddress" required placeholder="請填寫完整送貨地址">
+        </div>
+        <div class="form-group">
+          <label>付款方式 <span>*</span></label>
+          <select id="payMethod">
+            <option value="貨到付款">貨到付款（黑貓宅急便 / 大榮物流）</option>
+            <option value="銀行匯款">銀行匯款（合作金庫 006 二林分行）</option>
+            <option value="農會代收">產銷班 / 農會代收結算</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>統一編號 / 抬頭（需要開立三聯發票者填寫）</label>
+          <input type="text" id="custTaxId" placeholder="例如：54766327（8碼）">
+        </div>
+        <div class="form-group">
+          <label>希望到貨時段</label>
+          <select id="deliveryTime">
+            <option value="不指定">不指定</option>
+            <option value="上午時段 (13:00前)">上午時段 (13:00 前)</option>
+            <option value="下午時段 (14:00-18:00)">下午時段 (14:00 - 18:00)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group" style="margin-top: 1rem;">
+        <label>栽培作物種類與特別需求（可由佑辰農藝專員免費為您評估稀釋配方）</label>
+        <textarea id="orderNotes" rows="2" placeholder="例如：巨峰葡萄目前剛修剪完畢；或文旦柚即將進行催花..."></textarea>
+      </div>
+      <div class="form-tips">
+        🚚 <strong>出貨說明：</strong>單筆訂購金額滿 <strong>NT$ 3,000</strong> 即享免運配送優惠；未滿額本島酌收物流處理費 NT$ 150。全系列資材均為高活性有機酸體系，切勿與強鹼性資材混合。
+      </div>
+    </form>
+  </div>
+
+  <!-- 官方企業資訊與版權 -->
+  <footer>
+    <p><strong>總經銷：佑辰有限公司 AGPRIME CO., LTD.</strong></p>
+    <p>統一編號：<strong>54766327</strong> ｜ 代表人：陳信佑</p>
+    <p>服務電話：(04) 2233-0268 ｜ 傳真專線：(04) 2241-1488 ｜ 營業時間：週一至週五 08:30 - 17:30</p>
+    <p>公司地址：406 臺中市北屯區平田里遼陽北二街11-1號1樓</p>
+    <div class="footer-links">
+      <a href="http://www.agprime.com.tw" target="_blank">佑辰官方網站</a>
+      <span>‧</span>
+      <a href="tel:0422330268">致電農事諮詢專線</a>
+    </div>
+  </footer>
+
+</div>
+
+<!-- 底部固定總計結帳列 -->
+<div class="floating-footer">
+  <div class="summary-info">
+    <span class="total-count-tag" id="totalQtyDisplay">已選購 0 件商品</span>
+    <div class="total-price-wrap">
+      合計總金額：<span class="total-price" id="totalAmountDisplay">NT$ 0</span>
+    </div>
+  </div>
+  <button type="submit" form="orderForm" class="btn-submit-order">確認送出訂購單</button>
+</div>
+
+<!-- 互動計算與訂單生成 Script -->
+<script>
+  function changeQty(id, delta) {
+    const input = document.getElementById(id);
+    let val = parseInt(input.value) || 0;
+    val = Math.max(0, val + delta);
+    input.value = val;
+    calcTotal();
+  }
+
+  function calcTotal() {
+    let total = 0;
+    let totalQty = 0;
+    const inputs = document.querySelectorAll('.qty-input');
+    inputs.forEach(input => {
+      const price = parseInt(input.getAttribute('data-price')) || 0;
+      const qty = parseInt(input.value) || 0;
+      if (qty > 0) {
+        total += price * qty;
+        totalQty += qty;
+      }
+    });
+
+    document.getElementById('totalQtyDisplay').textContent = `已選購 ${totalQty} 件商品`;
+    document.getElementById('totalAmountDisplay').textContent = 'NT$ ' + total.toLocaleString();
+  }
+
+  function handleOrderSubmit(e) {
+    e.preventDefault();
+    
+    // 檢查是否有選購商品
+    const inputs = document.querySelectorAll('.qty-input');
+    let orderItems = [];
+    let grandTotal = 0;
+
+    inputs.forEach(input => {
+      const qty = parseInt(input.value) || 0;
+      if (qty > 0) {
+        const name = input.getAttribute('data-name');
+        const price = parseInt(input.getAttribute('data-price'));
+        const subtotal = price * qty;
+        grandTotal += subtotal;
+        orderItems.push(`● ${name} × ${qty} 件 = NT$ ${subtotal.toLocaleString()}`);
+      }
+    });
+
+    if (orderItems.length === 0) {
+      alert('請先在上方商品清單中選取您要訂購的數量！');
+      window.scrollTo({ top: 400, behavior: 'smooth' });
+      return;
+    }
+
+    const name = document.getElementById('custName').value;
+    const phone = document.getElementById('custPhone').value;
+    const addr = document.getElementById('custAddress').value;
+    const pay = document.getElementById('payMethod').value;
+    const taxId = document.getElementById('custTaxId').value || '無統編';
+    const time = document.getElementById('deliveryTime').value;
+    const notes = document.getElementById('orderNotes').value || '無特別備註';
+
+    const orderSummary = 
+      `【佑辰農好事 - 訂單確認】\n` +
+      `--------------------------------\n` +
+      `訂購人：${name}\n` +
+      `電話：${phone}\n` +
+      `地址：${addr}\n` +
+      `付款方式：${pay}\n` +
+      `統編抬頭：${taxId}\n` +
+      `收件時段：${time}\n` +
+      `作物/備註：${notes}\n` +
+      `--------------------------------\n` +
+      `訂購明細：\n${orderItems.join('\n')}\n` +
+      `--------------------------------\n` +
+      `總計金額：NT$ ${grandTotal.toLocaleString()} 元\n` +
+      `--------------------------------\n` +
+      `感謝您的訂購！佑辰農事專員將致電與您確認出貨事宜。`;
+
+    alert(orderSummary);
+  }
+</script>
+</body>
+</html>
